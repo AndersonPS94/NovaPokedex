@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -40,9 +42,36 @@ android {
 
 dependencies {
 
-    //room database
+    //hilt injecao de deoendencias
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 
-    //retrofit
+    // ViewModel
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    // LiveData
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+
+    // SplashScreen
+    implementation(libs.androidx.core.splashscreen)
+
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+
+
+    // Testes Unitários
+    testImplementation(libs.junit)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.inline)
+    testImplementation(libs.androidx.core.testing)
+    testImplementation(libs.androidx.lifecycle.livedata.testing)
+    testImplementation(libs.androidx.room.testing)
+
+    // Retrofit
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    implementation (libs.logging.interceptor)
 
     //dependencias padroes do projeto
     implementation(libs.androidx.core.ktx)
@@ -53,4 +82,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+
+kapt {
+    correctErrorTypes = true
 }
