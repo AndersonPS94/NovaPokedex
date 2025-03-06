@@ -1,4 +1,4 @@
-package com.example.hacksprintpokedex
+package com.example.hacksprintpokedex.presentation.ui.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
