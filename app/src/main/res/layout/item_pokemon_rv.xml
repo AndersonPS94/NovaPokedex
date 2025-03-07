@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/itemrvpokemon"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:background="@drawable/backgroundshapeitem"
-    android:padding="8dp">
+    android:layout_height="120dp"
+    android:background="@drawable/backgroundshapeitem">
 
     <TextView
         android:id="@+id/TVPokeNum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/poppinssemibold"
         android:text="#001"
         android:textSize="20sp"
@@ -25,27 +25,34 @@
         android:id="@+id/imageView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.047"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/pokebolaiconenumero" />
 
     <ImageView
         android:id="@+id/IVPokemon"
-        android:layout_width="127dp"
-        android:layout_height="113dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.862"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/TVName"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.338"
         app:srcCompat="@drawable/bulbasaurimage" />
 
     <TextView
         android:id="@+id/TVName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
+        android:layout_marginStart="56dp"
         android:fontFamily="@font/poppinbslack"
         android:text="Bulbassaur"
         android:textSize="20sp"
