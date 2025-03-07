@@ -2,7 +2,7 @@
 <resources>
     <style name="Theme.splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">#FF0000</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/pokemonicon </item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/pikachu3d</item>
         <item name="android:windowSplashScreenBrandingImage">@drawable/pokemonbrandimage</item>
 
 
