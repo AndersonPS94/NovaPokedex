@@ -14,9 +14,12 @@
         android:theme="@style/Theme.Hacksprintpokedex"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.ui.activities.PokemonDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.ui.activities.MainActivity"
-            android:theme="@style/Theme.splash"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
