@@ -36,4 +36,31 @@
         android:textSize="24sp"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="421dp" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/iconelocalizapokemon"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="707dp" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/pokeboladesativada"
+        tools:layout_editor_absoluteX="382dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppinssemibold"
+        android:text="Pokemon location"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="67dp"
+        tools:layout_editor_absoluteY="716dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
