@@ -15,5 +15,13 @@ class MainActivity : AppCompatActivity() {
         Thread.sleep(8000)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        inicializarEventoClique()
+    }
+
+    private fun inicializarEventoClique() {
+        with(binding) {
+
+        }
     }
 }
