@@ -41,6 +41,8 @@ android {
 }
 
 dependencies {
+    //picasso
+    implementation("com.squareup.picasso:picasso:2.8")
 
     //hilt injecao de deoendencias
     implementation(libs.hilt.android)
