@@ -6,7 +6,7 @@ Este repositório contém uma aplicação Android inspirada na Pokédex, desenvo
 
 ## 📸 Demonstração
 
-<img src="https://github.com/user-attachments/assets/aaf6d9d8-c00f-4b4c-a63b-fc0ce0acd43e" width="230">    
+https://github.com/user-attachments/assets/aaf6d9d8-c00f-4b4c-a63b-fc0ce0acd43e
 
 
 
