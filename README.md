@@ -57,12 +57,19 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias e padrões:
 Durante o desenvolvimento, foram reforçados conceitos como:
 
 ✅ Boas práticas de arquitetura Android
+
 ✅ Aplicação de MVVM + Clean Architecture
+
 ✅ Comunicação entre camadas com interfaces e Repositories
+
 ✅ Testes unitários e organização modular
+
 ✅ Consumo de APIs REST com Retrofit + Gson
+
 ✅ Room para persistência local
+
 ✅ Experiência real com gerenciamento de estado e navegação entre Activities
+
 
 ---
 
