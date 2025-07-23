@@ -1,4 +1,4 @@
-package com.example.hacksprintpokedex.domain.model
+package com.example.hacksprintpokedex.data.model
 
 
 // Dados detalhados do Pokémon

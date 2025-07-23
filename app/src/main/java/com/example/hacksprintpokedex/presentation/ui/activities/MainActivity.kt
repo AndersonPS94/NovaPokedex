@@ -7,9 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hacksprintpokedex.databinding.ActivityMainBinding
-import com.example.hacksprintpokedex.domain.model.Pokemon
+import com.example.hacksprintpokedex.data.model.Pokemon
 import com.example.hacksprintpokedex.data.remote.api.PokeApiService
-import com.example.hacksprintpokedex.domain.model.PokemonDetailResponse
+import com.example.hacksprintpokedex.data.model.PokemonDetailResponse
 import com.example.hacksprintpokedex.presentation.ui.adapters.PokemonAdapter
 import kotlinx.coroutines.*
 import retrofit2.Retrofit

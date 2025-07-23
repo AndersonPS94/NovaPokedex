@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hacksprintpokedex.R
 import com.example.hacksprintpokedex.databinding.ItemPokemonRvBinding
-import com.example.hacksprintpokedex.domain.model.Pokemon
+import com.example.hacksprintpokedex.data.model.Pokemon
 import com.squareup.picasso.Picasso
 
 class PokemonAdapter(

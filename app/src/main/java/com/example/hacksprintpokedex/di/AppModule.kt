@@ -1,4 +1,4 @@
-package com.example.hacksprintpokedex.data.di
+package com.example.hacksprintpokedex.di
 
 import dagger.Module
 import dagger.hilt.InstallIn

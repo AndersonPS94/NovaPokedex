@@ -10,9 +10,9 @@ import androidx.lifecycle.lifecycleScope
 import com.example.hacksprintpokedex.R
 import com.example.hacksprintpokedex.data.remote.api.PokeApiService
 import com.example.hacksprintpokedex.databinding.ActivityPokemonDetailBinding
-import com.example.hacksprintpokedex.domain.model.EvolutionChainResponse
-import com.example.hacksprintpokedex.domain.model.PokemonDetailResponse
-import com.example.hacksprintpokedex.domain.model.PokemonSpeciesResponse
+import com.example.hacksprintpokedex.data.model.EvolutionChainResponse
+import com.example.hacksprintpokedex.data.model.PokemonDetailResponse
+import com.example.hacksprintpokedex.data.model.PokemonSpeciesResponse
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
@@ -169,9 +169,6 @@ class PokemonDetailActivity : AppCompatActivity() {
         }?.flavorText?.replace("\n", " ")?.replace("\u000c", " ") ?: "Description not available."
         binding.pokemonDescription.text = flavorText
 
-        // Evolução
-        val evolutionText = extractEvolutionText(evolutionChain, detail.name)
-        binding.pokemonEvolutionStatus.text = evolutionText
 
         // Gênero
         val genderRate = species.genderRate
@@ -199,25 +196,4 @@ class PokemonDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun extractEvolutionText(evolutionChain: EvolutionChainResponse?, currentName: String): String {
-        if (evolutionChain == null) return "Evolution info not available"
-
-        val builder = StringBuilder()
-        val base = evolutionChain.chain
-        fun appendChain(node: EvolutionChainResponse.ChainLink?) {
-            if (node == null) return
-            builder.append(node.species.name.replaceFirstChar { it.uppercase() })
-            if (node.evolvesTo.isNotEmpty()) {
-                builder.append(" → ")
-                appendChain(node.evolvesTo.first())
-            }
-        }
-        appendChain(base)
-
-        val evolutionLine = builder.toString()
-        return if (evolutionLine.contains(currentName.lowercase()))
-            "Evolution Chain: $evolutionLine"
-        else
-            "Not in main evolution chain"
-    }
 }

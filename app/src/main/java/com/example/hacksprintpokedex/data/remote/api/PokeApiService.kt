@@ -1,9 +1,9 @@
 package com.example.hacksprintpokedex.data.remote.api
 
-import com.example.hacksprintpokedex.domain.model.EvolutionChainResponse
-import com.example.hacksprintpokedex.domain.model.PokemonDetailResponse
-import com.example.hacksprintpokedex.domain.model.PokemonListResponse
-import com.example.hacksprintpokedex.domain.model.PokemonSpeciesResponse
+import com.example.hacksprintpokedex.data.model.EvolutionChainResponse
+import com.example.hacksprintpokedex.data.model.PokemonDetailResponse
+import com.example.hacksprintpokedex.data.model.PokemonListResponse
+import com.example.hacksprintpokedex.data.model.PokemonSpeciesResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
