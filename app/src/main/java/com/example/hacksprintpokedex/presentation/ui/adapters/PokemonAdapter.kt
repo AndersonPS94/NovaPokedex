@@ -16,11 +16,14 @@ class PokemonAdapter(
     private val onItemClick: (Pokemon) -> Unit
 ) : RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() {
 
+    private var fullList: List<Pokemon> = items.toList()
+
     class PokemonViewHolder(val binding: ItemPokemonRvBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
-        val binding = ItemPokemonRvBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemPokemonRvBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false)
         return PokemonViewHolder(binding)
     }
 
@@ -55,6 +58,20 @@ class PokemonAdapter(
 
     fun updateList(newList: List<Pokemon>) {
         items = newList
+        fullList = newList.toList()
+        notifyDataSetChanged()
+    }
+
+
+    fun filterList(query: String) {
+        val filtered = if (query.isEmpty()) {
+            fullList
+        } else {
+            fullList.filter {
+                it.name.contains(query, ignoreCase = true)
+            }
+        }
+        items = filtered
         notifyDataSetChanged()
     }
 

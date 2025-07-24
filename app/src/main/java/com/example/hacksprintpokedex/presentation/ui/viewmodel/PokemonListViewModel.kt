@@ -25,7 +25,7 @@ class PokemonListViewModel @Inject constructor(
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val pokemons = repository.getPokemonList(151)
+                val pokemons = repository.getPokemonList(1400)
                 _pokemonList.postValue(pokemons)
             } catch (e: Exception) {
                 e.printStackTrace()

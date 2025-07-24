@@ -5,11 +5,8 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.hacksprintpokedex.R
 import com.example.hacksprintpokedex.databinding.ActivityMainBinding
 import com.example.hacksprintpokedex.presentation.ui.adapters.PokemonAdapter
 import com.example.hacksprintpokedex.presentation.ui.viewmodel.PokemonListViewModel
@@ -36,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         setupRecyclerView()
         setupObservers()
+        setupSearchView()
 
         viewModel.loadPokemons()
     }
@@ -57,5 +55,19 @@ class MainActivity : AppCompatActivity() {
         viewModel.pokemonList.observe(this) { list ->
             adapter.updateList(list)
         }
+    }
+
+    private fun setupSearchView() {
+        val searchView = binding.searchView
+        searchView.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filterList(newText.orEmpty())
+                return true
+            }
+        })
     }
 }

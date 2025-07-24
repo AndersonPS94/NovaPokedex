@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import android.widget.LinearLayout
 import com.bumptech.glide.Glide
 import com.example.hacksprintpokedex.R
 import com.example.hacksprintpokedex.databinding.ActivityPokemonDetailBinding
@@ -76,17 +77,17 @@ class PokemonDetailActivity : AppCompatActivity() {
 
             if (pokemon.genderRate == -1) {
                 binding.pokemonGender.text = "Genderless"
-                binding.maleBar.layoutParams = android.widget.LinearLayout.LayoutParams(0, android.widget.LinearLayout.LayoutParams.MATCH_PARENT, 0f)
-                binding.femaleBar.layoutParams = android.widget.LinearLayout.LayoutParams(0, android.widget.LinearLayout.LayoutParams.MATCH_PARENT, 0f)
+                binding.maleBar.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0f)
+                binding.femaleBar.layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 0f)
             } else {
-                val malePercent = 100 - pokemon.genderRate
-                val femalePercent = pokemon.genderRate
-                binding.pokemonGender.text = "$malePercent% ♂  $femalePercent% ♀"
+                val femalePercent = pokemon.genderRate * 12.5f
+                val malePercent = 100f - femalePercent
+                binding.pokemonGender.text = "${malePercent.toInt()}% ♂  ${femalePercent.toInt()}% ♀"
 
-                val paramsMale = binding.maleBar.layoutParams as android.widget.LinearLayout.LayoutParams
-                val paramsFemale = binding.femaleBar.layoutParams as android.widget.LinearLayout.LayoutParams
-                paramsMale.weight = malePercent.toFloat()
-                paramsFemale.weight = femalePercent.toFloat()
+                val paramsMale = binding.maleBar.layoutParams as LinearLayout.LayoutParams
+                val paramsFemale = binding.femaleBar.layoutParams as LinearLayout.LayoutParams
+                paramsMale.weight = malePercent
+                paramsFemale.weight = femalePercent
                 binding.maleBar.layoutParams = paramsMale
                 binding.femaleBar.layoutParams = paramsFemale
             }
