@@ -2,6 +2,7 @@ package com.example.hacksprintpokedex.presentation.ui.activities
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -18,7 +19,6 @@ class PokemonDetailActivity : AppCompatActivity() {
 
     private var currentPokemonId: Int = 1
 
-
     private var normalImageUrl: String? = null
     private var shinyImageUrl: String? = null
 
@@ -28,6 +28,7 @@ class PokemonDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPokemonDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        enableEdgeToEdge()
 
         currentPokemonId = intent.getIntExtra("pokemon_id", 1)
 
@@ -68,21 +69,27 @@ class PokemonDetailActivity : AppCompatActivity() {
             loadPokemonImage(normalImageUrl)
 
             binding.pokemonDescription.text = pokemon.description
-            binding.pokemonRegion.text = "Região de ${pokemon.region}"
+            binding.pokemonRegion.text = "${pokemon.region}"
             binding.statWeightValue.text = "${pokemon.weight} kg"
             binding.statHeightValue.text = "${pokemon.height} m"
             binding.statAbilityValue.text = pokemon.ability
 
-            val malePercent = 100 - pokemon.genderRate
-            val femalePercent = pokemon.genderRate
-            binding.pokemonGender.text = "$malePercent% $femalePercent%"
+            if (pokemon.genderRate == -1) {
+                binding.pokemonGender.text = "Genderless"
+                binding.maleBar.layoutParams = android.widget.LinearLayout.LayoutParams(0, android.widget.LinearLayout.LayoutParams.MATCH_PARENT, 0f)
+                binding.femaleBar.layoutParams = android.widget.LinearLayout.LayoutParams(0, android.widget.LinearLayout.LayoutParams.MATCH_PARENT, 0f)
+            } else {
+                val malePercent = 100 - pokemon.genderRate
+                val femalePercent = pokemon.genderRate
+                binding.pokemonGender.text = "$malePercent% ♂  $femalePercent% ♀"
 
-            val paramsMale = binding.maleBar.layoutParams as android.widget.LinearLayout.LayoutParams
-            val paramsFemale = binding.femaleBar.layoutParams as android.widget.LinearLayout.LayoutParams
-            paramsMale.weight = malePercent.toFloat()
-            paramsFemale.weight = femalePercent.toFloat()
-            binding.maleBar.layoutParams = paramsMale
-            binding.femaleBar.layoutParams = paramsFemale
+                val paramsMale = binding.maleBar.layoutParams as android.widget.LinearLayout.LayoutParams
+                val paramsFemale = binding.femaleBar.layoutParams as android.widget.LinearLayout.LayoutParams
+                paramsMale.weight = malePercent.toFloat()
+                paramsFemale.weight = femalePercent.toFloat()
+                binding.maleBar.layoutParams = paramsMale
+                binding.femaleBar.layoutParams = paramsFemale
+            }
         }
 
         viewModel.error.observe(this) { error ->

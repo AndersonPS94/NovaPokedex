@@ -2,6 +2,7 @@ package com.example.hacksprintpokedex.presentation.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -27,13 +28,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        enableEdgeToEdge()
 
         splashScreen.setKeepOnScreenCondition {
             viewModel.isLoading.value ?: true
         }
-
-        window.statusBarColor = ContextCompat.getColor(this, R.color.cor_secundaria)
-        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = false
 
         setupRecyclerView()
         setupObservers()
