@@ -12,7 +12,7 @@ import com.example.hacksprintpokedex.data.model.Pokemon
 import com.squareup.picasso.Picasso
 
 class PokemonAdapter(
-    private val items: List<Pokemon>,
+    private var items: List<Pokemon>,
     private val onItemClick: (Pokemon) -> Unit
 ) : RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() {
 
@@ -52,6 +52,11 @@ class PokemonAdapter(
     }
 
     override fun getItemCount(): Int = items.size
+
+    fun updateList(newList: List<Pokemon>) {
+        items = newList
+        notifyDataSetChanged()
+    }
 
     private fun getColorByType(type: String): Int {
         return when (type.lowercase()) {

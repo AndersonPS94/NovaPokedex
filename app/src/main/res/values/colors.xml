@@ -3,8 +3,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!--         Cores customizadas                -->
-
     <color name="cor_primaria">#B8212F</color>
     <color name="cor_secundaria">#13152A</color>
 </resources>

@@ -44,6 +44,9 @@ dependencies {
     //picasso
     implementation("com.squareup.picasso:picasso:2.8")
 
+    implementation("androidx.activity:activity-ktx:1.7.2")
+// versão exemplo, use a mais recente
+
     //hilt injecao de deoendencias
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)

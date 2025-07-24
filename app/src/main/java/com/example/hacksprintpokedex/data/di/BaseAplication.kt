@@ -1,4 +1,4 @@
-package com.example.hacksprintpokedex.di
+package com.example.hacksprintpokedex.data.di
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
