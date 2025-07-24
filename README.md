@@ -47,7 +47,7 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias e padrões:
   * Gênero
   * Peso, altura e habilidades
 * 🎨 Alternância entre sprites normais e shiny.
-* 🧠 Carregamento inteligente via coroutines e paginado.
+* 🧠 Carregamento inteligente via coroutines.
 * ⚠️ Tratamento de erros e feedback visual.
 
 ---
