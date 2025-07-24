@@ -30,7 +30,7 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias e padrões:
 * **RecyclerView** — Para exibição da lista de Pokémons.
 * **ViewBinding** — Para acesso seguro às views.
 * **Coroutines** — Para chamadas assíncronas.
-* **Injeção de Dependências (em breve com Hilt)**.
+* **Injeção de Dependências**.
 * **Testes Unitários** — Cobertura da lógica com testes automatizados.
 
 ---
@@ -75,11 +75,9 @@ Durante o desenvolvimento, foram reforçados conceitos como:
 
 ## 📋 TODO
 
-* [ ] Implementar **Hilt** para injeção de dependências
 * [ ] Adicionar **Paging 3** para paginação dos Pokémons
 * [ ] Adicionar testes instrumentados com **Espresso**
 * [ ] Criar sistema de favoritos usando Room
-* [ ] Melhorar UI/UX com animações e transições
 * [ ] Adicionar suporte offline completo
 
 ---
