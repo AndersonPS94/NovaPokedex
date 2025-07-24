@@ -24,11 +24,11 @@
             android:clipToPadding="false">
 
             <ImageView
-                android:id="@+id/pokemon_image"
+                android:id="@+id/pokemonImage"
                 android:layout_width="250dp"
                 android:layout_height="250dp"
                 android:layout_centerInParent="true"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
                 android:src="@drawable/bulabasaur" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -68,7 +68,7 @@
                 android:id="@+id/pokemon_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bulbassauro"
+                android:text="Bulbasaur"
                 android:textSize="50sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black" />
@@ -91,7 +91,7 @@
                     android:id="@+id/pokemon_type1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Grama"
+                    android:text="Grass"
                     android:textSize="30sp"
                     android:textStyle="bold"
                     android:textColor="@android:color/white"
@@ -105,7 +105,7 @@
                     android:id="@+id/pokemon_type2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Veneno"
+                    android:text="Poison"
                     android:textSize="30sp"
                     android:textStyle="bold"
                     android:textColor="@android:color/white"
@@ -123,7 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Carrega uma semente nas costas desde o nascimento. À medida que seu corpo cresce, a semente também cresce."
+            android:text="Carries a seed on its back from birth. As it grows, the seed also grows."
             android:textSize="20sp"
             android:lineSpacingExtra="4dp"
             android:textColor="@android:color/black"
@@ -148,7 +148,7 @@
                 android:id="@+id/pokemon_region"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Região de Kanto"
+                android:text="Region: Kanto"
                 android:textSize="25sp"
                 android:textColor="@android:color/black" />
         </LinearLayout>
@@ -161,7 +161,7 @@
             android:layout_marginTop="24dp"
             android:weightSum="3">
 
-            <!-- PESO -->
+            <!-- WEIGHT -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -178,7 +178,7 @@
                     android:id="@+id/stat_weight_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PESO"
+                    android:text="WEIGHT"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -186,12 +186,12 @@
                     android:id="@+id/stat_weight_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="6,9 kg"
+                    android:text="6.9 kg"
                     android:textSize="20sp"
                     android:textColor="@android:color/darker_gray" />
             </LinearLayout>
 
-            <!-- ALTURA -->
+            <!-- HEIGHT -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -208,7 +208,7 @@
                     android:id="@+id/stat_height_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ALTURA"
+                    android:text="HEIGHT"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -216,12 +216,12 @@
                     android:id="@+id/stat_height_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0.7 M"
+                    android:text="0.7 m"
                     android:textSize="20sp"
                     android:textColor="@android:color/darker_gray" />
             </LinearLayout>
 
-            <!-- HABILIDADE -->
+            <!-- ABILITY -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -238,7 +238,7 @@
                     android:id="@+id/stat_ability_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="HABILIDADE"
+                    android:text="ABILITY"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
@@ -251,7 +251,7 @@
                     android:textColor="@android:color/darker_gray" />
             </LinearLayout>
 
-            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

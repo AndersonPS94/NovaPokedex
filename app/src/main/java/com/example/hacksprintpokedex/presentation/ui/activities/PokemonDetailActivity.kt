@@ -1,199 +1,154 @@
 package com.example.hacksprintpokedex.presentation.ui.activities
 
-import android.graphics.Color
 import android.os.Bundle
-import android.view.View
-import android.widget.LinearLayout
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.example.hacksprintpokedex.R
-import com.example.hacksprintpokedex.data.remote.api.PokeApiService
 import com.example.hacksprintpokedex.databinding.ActivityPokemonDetailBinding
-import com.example.hacksprintpokedex.data.model.EvolutionChainResponse
-import com.example.hacksprintpokedex.data.model.PokemonDetailResponse
-import com.example.hacksprintpokedex.data.model.PokemonSpeciesResponse
-import com.squareup.picasso.Picasso
-import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import android.content.res.ColorStateList
+import com.example.hacksprintpokedex.presentation.ui.viewmodel.PokemonDetailViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PokemonDetailActivity : AppCompatActivity() {
 
-    private val binding by lazy { ActivityPokemonDetailBinding.inflate(layoutInflater) }
-
-    private val retrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl("https://pokeapi.co/api/v2/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    private val pokeApiService by lazy {
-        retrofit.create(PokeApiService::class.java)
-    }
+    private lateinit var binding: ActivityPokemonDetailBinding
+    private val viewModel: PokemonDetailViewModel by viewModels()
 
     private var currentPokemonId: Int = 1
 
-    private val typeColorMap = mapOf(
-        "normal" to "#A8A77A", "fire" to "#EE8130", "water" to "#6390F0",
-        "electric" to "#F7D02C", "grass" to "#7AC74C", "ice" to "#96D9D6",
-        "fighting" to "#C22E28", "poison" to "#A33EA1", "ground" to "#E2BF65",
-        "flying" to "#A98FF3", "psychic" to "#F95587", "bug" to "#A6B91A",
-        "rock" to "#B6A136", "ghost" to "#735797", "dragon" to "#6F35FC",
-        "dark" to "#705746", "steel" to "#B7B7CE", "fairy" to "#D685AD"
-    )
+
+    private var normalImageUrl: String? = null
+    private var shinyImageUrl: String? = null
+
+    private var showingShiny = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityPokemonDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val pokemonNameFromIntent = intent.getStringExtra("pokemon_name") ?: "bulbasaur"
-        loadPokemonByName(pokemonNameFromIntent.lowercase())
+        currentPokemonId = intent.getIntExtra("pokemon_id", 1)
 
+        setupObservers()
+        setupButtons()
+        setupImageClick()
+
+        viewModel.loadPokemon(currentPokemonId.toString())
+    }
+
+    private fun setupObservers() {
+        viewModel.pokemon.observe(this) { pokemon ->
+            binding.pokemonName.text = pokemon.name.replaceFirstChar { it.uppercase() }
+            binding.pokemonNumber.text = "#${pokemon.id}"
+
+            val firstType = pokemon.types.getOrNull(0) ?: ""
+            val color = getTypeColor(firstType)
+
+            binding.pokemonType1.apply {
+                text = firstType.replaceFirstChar { it.uppercase() }
+                backgroundTintList = android.content.res.ColorStateList.valueOf(color)
+                visibility = if (firstType.isNotEmpty()) android.view.View.VISIBLE else android.view.View.GONE
+            }
+
+            val secondType = pokemon.types.getOrNull(1)
+            binding.pokemonType2.apply {
+                text = secondType?.replaceFirstChar { it.uppercase() } ?: ""
+                visibility = if (secondType != null) android.view.View.VISIBLE else android.view.View.GONE
+                backgroundTintList = android.content.res.ColorStateList.valueOf(getTypeColor(secondType ?: ""))
+            }
+
+            binding.typeBackgroundLayout.setBackgroundColor(color)
+
+            normalImageUrl = pokemon.imageUrl
+            shinyImageUrl = pokemon.shinyImageUrl ?: normalImageUrl
+
+            showingShiny = false
+            loadPokemonImage(normalImageUrl)
+
+            binding.pokemonDescription.text = pokemon.description
+            binding.pokemonRegion.text = "Região de ${pokemon.region}"
+            binding.statWeightValue.text = "${pokemon.weight} kg"
+            binding.statHeightValue.text = "${pokemon.height} m"
+            binding.statAbilityValue.text = pokemon.ability
+
+            val malePercent = 100 - pokemon.genderRate
+            val femalePercent = pokemon.genderRate
+            binding.pokemonGender.text = "$malePercent% $femalePercent%"
+
+            val paramsMale = binding.maleBar.layoutParams as android.widget.LinearLayout.LayoutParams
+            val paramsFemale = binding.femaleBar.layoutParams as android.widget.LinearLayout.LayoutParams
+            paramsMale.weight = malePercent.toFloat()
+            paramsFemale.weight = femalePercent.toFloat()
+            binding.maleBar.layoutParams = paramsMale
+            binding.femaleBar.layoutParams = paramsFemale
+        }
+
+        viewModel.error.observe(this) { error ->
+            Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun setupButtons() {
         binding.prevButton.setOnClickListener {
             if (currentPokemonId > 1) {
-                loadPokemonById(currentPokemonId - 1)
+                currentPokemonId--
+                viewModel.loadPokemon(currentPokemonId.toString())
             }
         }
 
         binding.nextButton.setOnClickListener {
-            loadPokemonById(currentPokemonId + 1)
+            currentPokemonId++
+            viewModel.loadPokemon(currentPokemonId.toString())
         }
     }
 
-    private fun loadPokemonByName(name: String) {
-        lifecycleScope.launch {
-            try {
-                val detailResponse = pokeApiService.getPokemon(name)
-                val speciesResponse = pokeApiService.getPokemonSpecies(name)
-
-                if (detailResponse.isSuccessful && speciesResponse.isSuccessful) {
-                    val pokemonDetail = detailResponse.body()!!
-                    val pokemonSpecies = speciesResponse.body()!!
-                    currentPokemonId = pokemonDetail.id
-
-                    val evolutionUrl = pokemonSpecies.evolutionChain.url
-                    val chainId = evolutionUrl.split("/").filter { it.isNotEmpty() }.last().toInt()
-                    val evolutionResponse = pokeApiService.getEvolutionChain(chainId)
-
-                    if (evolutionResponse.isSuccessful) {
-                        val evolutionChain = evolutionResponse.body()
-                        preencherUI(pokemonDetail, pokemonSpecies, evolutionChain)
-                    } else {
-                        preencherUI(pokemonDetail, pokemonSpecies, null)
-                    }
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+    private fun setupImageClick() {
+        binding.pokemonImage.setOnClickListener {
+            showingShiny = !showingShiny
+            val urlToLoad = if (showingShiny) shinyImageUrl else normalImageUrl
+            loadPokemonImage(urlToLoad)
         }
     }
 
-    private fun loadPokemonById(id: Int) {
-        lifecycleScope.launch {
-            try {
-                val detailResponse = pokeApiService.getPokemon(id.toString())
-                val speciesResponse = pokeApiService.getPokemonSpecies(id.toString())
-
-                if (detailResponse.isSuccessful && speciesResponse.isSuccessful) {
-                    val pokemonDetail = detailResponse.body()!!
-                    val pokemonSpecies = speciesResponse.body()!!
-                    currentPokemonId = pokemonDetail.id
-
-                    val evolutionUrl = pokemonSpecies.evolutionChain.url
-                    val chainId = evolutionUrl.split("/").filter { it.isNotEmpty() }.last().toInt()
-                    val evolutionResponse = pokeApiService.getEvolutionChain(chainId)
-
-                    if (evolutionResponse.isSuccessful) {
-                        val evolutionChain = evolutionResponse.body()
-                        preencherUI(pokemonDetail, pokemonSpecies, evolutionChain)
-                    } else {
-                        preencherUI(pokemonDetail, pokemonSpecies, null)
-                    }
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+    private fun loadPokemonImage(url: String?) {
+        if (url == null) {
+            binding.pokemonImage.setImageResource(R.drawable.bulabasaur)
+            return
         }
+
+        Glide.with(this)
+            .asGif()
+            .load(url)
+            .error(
+                Glide.with(this)
+                    .load(url)
+            )
+            .into(binding.pokemonImage)
     }
 
-    private fun preencherUI(
-        detail: PokemonDetailResponse,
-        species: PokemonSpeciesResponse,
-        evolutionChain: EvolutionChainResponse?
-    ) {
-        binding.pokemonName.text = detail.name.replaceFirstChar { it.uppercase() }
-        binding.pokemonNumber.text = "#${detail.id.toString().padStart(3, '0')}"
-        val imageUrl =
-            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${detail.id}.png"
-        Picasso.get().load(imageUrl).into(binding.pokemonImage)
-
-        val types = detail.types.sortedBy { it.slot }.map { it.type.name.lowercase() }
-        val type1 = types.getOrNull(0)
-        val type2 = types.getOrNull(1)
-
-        binding.pokemonType1.text = type1?.replaceFirstChar { it.uppercase() } ?: ""
-        val color1 = typeColorMap[type1] ?: "#777777"
-        binding.pokemonType1.backgroundTintList = ColorStateList.valueOf(Color.parseColor(color1))
-        binding.typeBackgroundLayout.setBackgroundColor(Color.parseColor(color1))
-
-        if (type2 != null) {
-            binding.pokemonType2.text = type2.replaceFirstChar { it.uppercase() }
-            val color2 = typeColorMap[type2] ?: "#777777"
-            binding.pokemonType2.backgroundTintList = ColorStateList.valueOf(Color.parseColor(color2))
-            binding.pokemonType2.visibility = View.VISIBLE
-        } else {
-            binding.pokemonType2.visibility = View.GONE
-        }
-
-        binding.statWeightIcon.setImageResource(R.drawable.business)
-        binding.statWeightLabel.text = "Weight"
-        binding.statWeightValue.text = "${detail.weight / 10.0} kg"
-
-        binding.statHeightIcon.setImageResource(R.drawable.resize)
-        binding.statHeightLabel.text = "Height"
-        binding.statHeightValue.text = "${detail.height / 10.0} m"
-
-        val abilityName = detail.abilities.firstOrNull()?.ability?.name ?: "Unknown"
-        binding.statAbilityIcon.setImageResource(R.drawable.thunder)
-        binding.statAbilityLabel.text = "Ability"
-        binding.statAbilityValue.text = abilityName.replaceFirstChar { it.uppercase() }
-
-        val regionName = species.generation.name.replace("-", " ").replaceFirstChar { it.uppercase() }
-        binding.pokemonRegion.text = "Region: $regionName"
-
-        val flavorText = species.flavorTextEntries.firstOrNull {
-            it.language.name == "en" || it.language.name == "pt"
-        }?.flavorText?.replace("\n", " ")?.replace("\u000c", " ") ?: "Description not available."
-        binding.pokemonDescription.text = flavorText
-
-
-        // Gênero
-        val genderRate = species.genderRate
-        if (genderRate == -1) {
-            binding.pokemonGender.text = "Genderless"
-            binding.maleBar.isVisible = false
-            binding.femaleBar.isVisible = false
-        } else {
-            val malePercent = ((8 - genderRate) / 8.0) * 100
-            val femalePercent = 100 - malePercent
-
-            binding.pokemonGender.text = String.format("%.1f%% Male  %.1f%% Female", malePercent, femalePercent)
-
-            val maleParams = binding.maleBar.layoutParams as LinearLayout.LayoutParams
-            maleParams.weight = malePercent.toFloat()
-            binding.maleBar.layoutParams = maleParams
-            binding.maleBar.setBackgroundColor(Color.parseColor("#36A2EB"))
-            binding.maleBar.isVisible = true
-
-            val femaleParams = binding.femaleBar.layoutParams as LinearLayout.LayoutParams
-            femaleParams.weight = femalePercent.toFloat()
-            binding.femaleBar.layoutParams = femaleParams
-            binding.femaleBar.setBackgroundColor(Color.parseColor("#FF6384"))
-            binding.femaleBar.isVisible = true
+    private fun getTypeColor(type: String): Int {
+        return when (type.lowercase()) {
+            "normal" -> getColor(R.color.type_normal)
+            "fire" -> getColor(R.color.type_fire)
+            "water" -> getColor(R.color.type_water)
+            "grass" -> getColor(R.color.type_grass)
+            "electric" -> getColor(R.color.type_electric)
+            "ice" -> getColor(R.color.type_ice)
+            "fighting" -> getColor(R.color.type_fighting)
+            "poison" -> getColor(R.color.type_poison)
+            "ground" -> getColor(R.color.type_ground)
+            "flying" -> getColor(R.color.type_flying)
+            "psychic" -> getColor(R.color.type_psychic)
+            "bug" -> getColor(R.color.type_bug)
+            "rock" -> getColor(R.color.type_rock)
+            "ghost" -> getColor(R.color.type_ghost)
+            "dragon" -> getColor(R.color.type_dragon)
+            "dark" -> getColor(R.color.type_dark)
+            "steel" -> getColor(R.color.type_steel)
+            "fairy" -> getColor(R.color.type_fairy)
+            else -> getColor(R.color.type_default)
         }
     }
-
 }

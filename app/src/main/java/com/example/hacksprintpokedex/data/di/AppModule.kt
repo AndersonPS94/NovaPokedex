@@ -1,9 +1,9 @@
 package com.example.hacksprintpokedex.data.di
 
-import androidx.core.content.pm.PermissionInfoCompat
 import com.example.hacksprintpokedex.data.remote.api.PokeApiService
 import com.example.hacksprintpokedex.data.repository.PokemonRepositoryImpl
 import com.example.hacksprintpokedex.domain.repository.PokemonRepository
+import com.example.hacksprintpokedex.domain.usecase.GetPokemonDetailUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,7 +1,6 @@
 package com.example.hacksprintpokedex.data.model
 
 
-// Dados detalhados do Pokémon
 data class PokemonDetailResponse(
     val id: Int,
     val name: String,
