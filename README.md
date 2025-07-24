@@ -75,11 +75,9 @@ Durante o desenvolvimento, foram reforçados conceitos como:
 
 ## 📋 TODO
 
-* [X] Implementar **Hilt** para injeção de dependências
 * [ ] Adicionar **Paging 3** para paginação dos Pokémons
 * [ ] Adicionar testes instrumentados com **Espresso**
 * [ ] Criar sistema de favoritos usando Room
-* [X] Melhorar UI/UX com animações e transições
 * [ ] Adicionar suporte offline completo
 
 ---
