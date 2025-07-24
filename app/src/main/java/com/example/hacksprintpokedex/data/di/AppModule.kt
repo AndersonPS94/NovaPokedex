@@ -32,4 +32,8 @@ object AppModule {
         return PokemonRepositoryImpl(apiService)
     }
 
+    @Provides
+    fun provideGetPokemonDetailUseCase(repo: PokemonRepository): GetPokemonDetailUseCase {
+        return GetPokemonDetailUseCase(repo)
+    }
 }

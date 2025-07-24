@@ -1,4 +1,4 @@
-package com.example.hacksprintpokedex.data.model
+package com.example.hacksprintpokedex.domain.model
 
 data class Pokemon(
     val id: Int,

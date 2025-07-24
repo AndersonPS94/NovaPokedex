@@ -1,6 +1,6 @@
 package com.example.hacksprintpokedex.data.repository
 
-import com.example.hacksprintpokedex.data.model.Pokemon
+import com.example.hacksprintpokedex.domain.model.Pokemon
 import com.example.hacksprintpokedex.data.remote.api.PokeApiService
 import com.example.hacksprintpokedex.domain.repository.PokemonRepository
 import javax.inject.Inject
