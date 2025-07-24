@@ -75,7 +75,6 @@ Durante o desenvolvimento, foram reforçados conceitos como:
 
 ## 📋 TODO
 
-* [ ] Adicionar **Paging 3** para paginação dos Pokémons
 * [ ] Adicionar testes instrumentados com **Espresso**
 * [ ] Criar sistema de favoritos usando Room
 * [ ] Adicionar suporte offline completo
