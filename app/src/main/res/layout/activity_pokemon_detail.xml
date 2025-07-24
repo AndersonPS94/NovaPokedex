@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
-    app:cardCornerRadius="16dp"
+    android:layout_margin="19dp"
+    app:cardCornerRadius="40dp"
     app:cardElevation="10dp">
 
     <LinearLayout
@@ -47,21 +46,21 @@
                 android:id="@+id/next_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:fabSize="mini"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="12dp"
-                android:tint="@android:color/black"
                 android:src="@drawable/ic_arrow_right"
-                app:backgroundTint="@android:color/white" />
+                android:tint="@android:color/black"
+                app:backgroundTint="@android:color/white"
+                app:fabSize="mini" />
         </RelativeLayout>
 
         <!-- Info Section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:gravity="center_horizontal"
+            android:orientation="vertical"
             android:paddingTop="16dp">
 
             <TextView
@@ -69,50 +68,50 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Bulbasaur"
+                android:textColor="@android:color/black"
                 android:textSize="50sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/pokemon_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="#001"
-                android:textSize="30sp"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="@android:color/darker_gray"
+                android:textSize="30sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/pokemon_type1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Grass"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/white"
-                    android:backgroundTint="#8BC34A"
+                    android:layout_marginEnd="8dp"
                     android:background="@drawable/bg_type"
+                    android:backgroundTint="#8BC34A"
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="4dp"
-                    android:layout_marginEnd="8dp" />
+                    android:text="Grass"
+                    android:textColor="@android:color/white"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/pokemon_type2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Poison"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/white"
-                    android:backgroundTint="#673AB7"
                     android:background="@drawable/bg_type"
+                    android:backgroundTint="#673AB7"
                     android:paddingHorizontal="10dp"
-                    android:paddingVertical="4dp" />
+                    android:paddingVertical="4dp"
+                    android:text="Poison"
+                    android:textColor="@android:color/white"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>
@@ -123,42 +122,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Carries a seed on its back from birth. As it grows, the seed also grows."
-            android:textSize="20sp"
+            android:gravity="center_horizontal"
             android:lineSpacingExtra="4dp"
+            android:text="Carries a seed on its back from birth. As it grows, the seed also grows."
             android:textColor="@android:color/black"
-            android:gravity="center_horizontal" />
+            android:textSize="20sp" />
 
         <!-- Region -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/pokemon_region_icon"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/map"
-                android:layout_marginEnd="8dp" />
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/map" />
 
             <TextView
                 android:id="@+id/pokemon_region"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Region: Kanto"
-                android:textSize="25sp"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="25sp" />
         </LinearLayout>
 
         <!-- Stats -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="24dp"
+            android:orientation="horizontal"
             android:weightSum="3">
 
             <!-- WEIGHT -->
@@ -166,14 +165,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/stat_weight_icon"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:src="@drawable/business" />
+
                 <TextView
                     android:id="@+id/stat_weight_label"
                     android:layout_width="wrap_content"
@@ -187,8 +187,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="6.9 kg"
-                    android:textSize="20sp"
-                    android:textColor="@android:color/darker_gray" />
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <!-- HEIGHT -->
@@ -196,14 +196,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/stat_height_icon"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:src="@drawable/resize" />
+
                 <TextView
                     android:id="@+id/stat_height_label"
                     android:layout_width="wrap_content"
@@ -217,8 +218,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0.7 m"
-                    android:textSize="20sp"
-                    android:textColor="@android:color/darker_gray" />
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="20sp" />
             </LinearLayout>
 
             <!-- ABILITY -->
@@ -226,14 +227,15 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/stat_ability_icon"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:src="@drawable/thunder" />
+
                 <TextView
                     android:id="@+id/stat_ability_label"
                     android:layout_width="wrap_content"
@@ -247,8 +249,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Overgrow"
-                    android:textSize="20sp"
-                    android:textColor="@android:color/darker_gray" />
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="20sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -256,10 +258,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
             android:layout_weight="1"
-            android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:layout_marginTop="30dp">
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/stat_gender_icon"
@@ -272,17 +274,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="GENDER"
+                android:textColor="@android:color/black"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/pokemon_gender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="87.5% 12.5%"
-                android:textSize="20sp"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="@android:color/darker_gray"
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
