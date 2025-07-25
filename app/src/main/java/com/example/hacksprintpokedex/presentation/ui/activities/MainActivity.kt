@@ -1,13 +1,16 @@
 package com.example.hacksprintpokedex.presentation.ui.activities
 
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.hacksprintpokedex.R
 import com.example.hacksprintpokedex.databinding.ActivityMainBinding
+import com.example.hacksprintpokedex.domain.model.PokemonDetail
 import com.example.hacksprintpokedex.presentation.ui.adapters.PokemonAdapter
 import com.example.hacksprintpokedex.presentation.ui.viewmodel.PokemonListViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,56 +21,65 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: PokemonListViewModel by viewModels()
     private lateinit var adapter: PokemonAdapter
+    private lateinit var splashMediaPlayer: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val splashScreen = installSplashScreen()
+        val splash = installSplashScreen()
+
+        splashMediaPlayer = MediaPlayer.create(this, R.raw.pikapipikachu)
+        splashMediaPlayer.start()
 
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         enableEdgeToEdge()
 
-        splashScreen.setKeepOnScreenCondition {
-            viewModel.isLoading.value ?: true
+        splash.setKeepOnScreenCondition {
+            (viewModel.isLoading.value ?: true) || splashMediaPlayer.isPlaying
         }
 
-        setupRecyclerView()
-        setupObservers()
-        setupSearchView()
+        adapter = PokemonAdapter(emptyList()) { pokemon ->
+            if (pokemon.name.lowercase() == "pikachu") {
+                val pikachuSound = MediaPlayer.create(this, R.raw.pikachu)
+                pikachuSound.setOnCompletionListener {
+                    pikachuSound.release()
+                    goToDetail(pokemon)
+                }
+                pikachuSound.start()
+            } else {
+                goToDetail(pokemon)
+            }
+        }
+
+        binding.pokemonList.layoutManager = LinearLayoutManager(this)
+        binding.pokemonList.adapter = adapter
+
+        viewModel.pokemonList.observe(this) { list ->
+            adapter.updateList(list)
+        }
+
+        binding.searchView.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(q: String?) = false
+            override fun onQueryTextChange(q: String?): Boolean {
+                adapter.filterList(q.orEmpty())
+                return true
+            }
+        })
 
         viewModel.loadPokemons()
     }
 
-    private fun setupRecyclerView() {
-        adapter = PokemonAdapter(emptyList()) { pokemon ->
-            val intent = Intent(this, PokemonDetailActivity::class.java).apply {
-                putExtra("pokemon_id", pokemon.id)
-                putExtra("pokemon_name", pokemon.name)
-                putExtra("pokemon_types", pokemon.types.toTypedArray())
-            }
-            startActivity(intent)
+    private fun goToDetail(pokemon: PokemonDetail) {
+        val intent = Intent(this, PokemonDetailActivity::class.java).apply {
+            putParcelableArrayListExtra("pokemonList", ArrayList(viewModel.pokemonList.value ?: emptyList()))
+            putExtra("pokemonName", pokemon.name)
         }
-        binding.pokemonList.adapter = adapter
-        binding.pokemonList.layoutManager = LinearLayoutManager(this)
+        startActivity(intent)
     }
 
-    private fun setupObservers() {
-        viewModel.pokemonList.observe(this) { list ->
-            adapter.updateList(list)
-        }
-    }
-
-    private fun setupSearchView() {
-        val searchView = binding.searchView
-        searchView.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                adapter.filterList(newText.orEmpty())
-                return true
-            }
-        })
+    override fun onDestroy() {
+        super.onDestroy()
+        splashMediaPlayer.release()
     }
 }

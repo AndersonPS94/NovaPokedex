@@ -1,14 +1,14 @@
 package com.example.hacksprintpokedex.data.repository
 
-import com.example.hacksprintpokedex.domain.model.Pokemon
 import com.example.hacksprintpokedex.data.remote.api.PokeApiService
+import com.example.hacksprintpokedex.domain.model.Pokemon
 import com.example.hacksprintpokedex.domain.model.PokemonDetail
 import com.example.hacksprintpokedex.domain.repository.PokemonRepository
 import javax.inject.Inject
 
 class PokemonRepositoryImpl @Inject constructor(
     private val apiService: PokeApiService
-): PokemonRepository {
+) : PokemonRepository {
 
     override suspend fun getPokemonList(limit: Int): List<Pokemon> {
         val response = apiService.getPokemonList(limit)
@@ -24,8 +24,8 @@ class PokemonRepositoryImpl @Inject constructor(
                 )
             }
         }
-
     }
+
     override suspend fun getPokemonDetail(nameOrId: String): PokemonDetail {
         val detailResponse = apiService.getPokemon(nameOrId)
         val speciesResponse = apiService.getPokemonSpecies(nameOrId)
@@ -38,7 +38,10 @@ class PokemonRepositoryImpl @Inject constructor(
         val species = speciesResponse.body()!!
 
         val imageUrl =
-            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${detail.id}.png"
+            "https://play.pokemonshowdown.com/sprites/ani/${detail.name.lowercase()}.gif"
+
+        val shinyImageUrl =
+            "https://play.pokemonshowdown.com/sprites/ani-shiny/${detail.name.lowercase()}.gif"
 
         val description = species.flavorTextEntries.firstOrNull {
             it.language.name == "en" || it.language.name == "pt"
@@ -52,6 +55,7 @@ class PokemonRepositoryImpl @Inject constructor(
             id = detail.id,
             name = detail.name,
             imageUrl = imageUrl,
+            shinyImageUrl = shinyImageUrl, // ✅ Adicionado
             types = detail.types.sortedBy { it.slot }.map { it.type.name },
             weight = detail.weight / 10.0,
             height = detail.height / 10.0,

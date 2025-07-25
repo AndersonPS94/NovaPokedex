@@ -1,5 +1,5 @@
+// data/model/PokemonDetailResponse.kt
 package com.example.hacksprintpokedex.data.model
-
 
 data class PokemonDetailResponse(
     val id: Int,

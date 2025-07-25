@@ -1,6 +1,5 @@
 package com.example.hacksprintpokedex.presentation.ui.adapters
 
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,15 +7,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hacksprintpokedex.R
 import com.example.hacksprintpokedex.databinding.ItemPokemonRvBinding
-import com.example.hacksprintpokedex.domain.model.Pokemon
+import com.example.hacksprintpokedex.domain.model.PokemonDetail
 import com.squareup.picasso.Picasso
+import android.content.res.ColorStateList
 
 class PokemonAdapter(
-    private var items: List<Pokemon>,
-    private val onItemClick: (Pokemon) -> Unit
+    private var items: List<PokemonDetail>,
+    private val onPokemonClick: (PokemonDetail) -> Unit
 ) : RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() {
 
-    private var fullList: List<Pokemon> = items.toList()
+    private var fullList: List<PokemonDetail> = items.toList()
 
     class PokemonViewHolder(val binding: ItemPokemonRvBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -49,19 +49,18 @@ class PokemonAdapter(
             }
 
             root.setOnClickListener {
-                onItemClick(pokemon)
+                onPokemonClick(pokemon)
             }
         }
     }
 
     override fun getItemCount(): Int = items.size
 
-    fun updateList(newList: List<Pokemon>) {
+    fun updateList(newList: List<PokemonDetail>) {
         items = newList
         fullList = newList.toList()
         notifyDataSetChanged()
     }
-
 
     fun filterList(query: String) {
         val filtered = if (query.isEmpty()) {
@@ -74,6 +73,8 @@ class PokemonAdapter(
         items = filtered
         notifyDataSetChanged()
     }
+
+    fun getItem(position: Int): PokemonDetail = items[position]
 
     private fun getColorByType(type: String): Int {
         return when (type.lowercase()) {

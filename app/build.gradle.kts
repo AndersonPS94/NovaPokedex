@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -41,6 +42,11 @@ android {
 }
 
 dependencies {
+// Coil principal
+    implementation("io.coil-kt:coil:2.5.0")
+
+// Suporte a GIFs animados
+    implementation("io.coil-kt:coil-gif:2.5.0")
 
     implementation("androidx.paging:paging-runtime:3.1.1")
 
