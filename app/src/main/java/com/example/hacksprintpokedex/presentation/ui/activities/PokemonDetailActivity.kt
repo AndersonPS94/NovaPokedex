@@ -2,11 +2,6 @@ package com.example.hacksprintpokedex.presentation.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
-import coil.ImageLoader
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
-import coil.request.ImageRequest
-
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -16,7 +11,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-
+import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import coil.request.ImageRequest
 import com.example.hacksprintpokedex.R
 import com.example.hacksprintpokedex.databinding.ActivityPokemonDetailBinding
 import com.example.hacksprintpokedex.domain.model.PokemonDetail
@@ -41,6 +39,7 @@ class PokemonDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         enableEdgeToEdge()
 
+        // Recebe lista e nome do Pokémon
         val pokemonList = intent.getParcelableArrayListExtra<PokemonDetail>("pokemonList")
         val pokemonName = intent.getStringExtra("pokemonName")
 
@@ -67,6 +66,7 @@ class PokemonDetailActivity : AppCompatActivity() {
         setupImageToggle()
     }
 
+    /** Observa LiveData do ViewModel */
     private fun observeViewModel() {
         viewModel.pokemonDetail.observe(this) { pokemon ->
             pokemon?.let { updateUI(it) }
@@ -87,13 +87,15 @@ class PokemonDetailActivity : AppCompatActivity() {
         }
     }
 
+    /** Configura botões de navegação */
     private fun setupNavigationButtons() {
-        val lottieAnimationView = binding.lottieAnim
-        lottieAnimationView.setOnClickListener {
+        // Botão voltar (Lottie anim)
+        binding.lottieAnim.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
         }
 
+        // Botão anterior
         binding.prevButton.setOnClickListener {
             if (allList.isNotEmpty()) {
                 currentIndex = (currentIndex - 1 + allList.size) % allList.size
@@ -103,6 +105,7 @@ class PokemonDetailActivity : AppCompatActivity() {
             }
         }
 
+        // Botão próximo
         binding.nextButton.setOnClickListener {
             if (allList.isNotEmpty()) {
                 currentIndex = (currentIndex + 1) % allList.size
@@ -113,7 +116,7 @@ class PokemonDetailActivity : AppCompatActivity() {
         }
     }
 
-
+    /** Alterna entre imagem normal e shiny */
     private fun setupImageToggle() {
         binding.pokemonImage.setOnClickListener {
             showingShiny = !showingShiny
@@ -122,15 +125,16 @@ class PokemonDetailActivity : AppCompatActivity() {
         }
     }
 
+    /** Atualiza a UI com dados do Pokémon */
     private fun updateUI(pokemon: PokemonDetail) {
         currentPokemon = pokemon
         showingShiny = false
 
         binding.pokemonName.text = pokemon.name.replaceFirstChar { it.uppercase() }
         binding.pokemonNumber.text = "#${pokemon.id.toString().padStart(3, '0')}"
-
         loadGif(pokemon.imageUrl)
 
+        // Fundo baseado no tipo
         if (pokemon.types.isNotEmpty()) {
             val firstTypeColor = getTypeColor(pokemon.types[0])
             binding.typeBackgroundLayout.setBackgroundColor(ContextCompat.getColor(this, firstTypeColor))
@@ -138,6 +142,7 @@ class PokemonDetailActivity : AppCompatActivity() {
             binding.typeBackgroundLayout.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent))
         }
 
+        // Tipos
         if (pokemon.types.isNotEmpty()) {
             binding.pokemontype1.text = pokemon.types[0].replaceFirstChar { it.uppercase() }
             binding.pokemontype1.visibility = View.VISIBLE
@@ -154,12 +159,14 @@ class PokemonDetailActivity : AppCompatActivity() {
             binding.pokemontype2.visibility = View.GONE
         }
 
+        // Dados adicionais
         binding.statHeightValue.text = "${pokemon.height} m"
         binding.statWeightValue.text = "${pokemon.weight} kg"
         binding.statAbilityValue.text = pokemon.ability.replaceFirstChar { it.uppercase() }
         binding.pokemonRegion.text = "Region: ${pokemon.region}"
         binding.pokemonDescription.text = pokemon.description
 
+        // Gênero
         if (pokemon.genderRate == -1) {
             binding.pokemonGender.text = "Genderless"
             binding.maleBar.visibility = View.GONE
@@ -167,7 +174,6 @@ class PokemonDetailActivity : AppCompatActivity() {
         } else {
             val femalePercent = (pokemon.genderRate / 8.0f) * 100
             val malePercent = 100 - femalePercent
-
             binding.pokemonGender.text = "${String.format("%.1f", malePercent)}% / ${String.format("%.1f", femalePercent)}%"
             binding.maleBar.visibility = View.VISIBLE
             binding.femaleBar.visibility = View.VISIBLE
@@ -176,17 +182,15 @@ class PokemonDetailActivity : AppCompatActivity() {
             val maleWeight = malePercent / total
             val femaleWeight = femalePercent / total
 
-            val maleParams = binding.maleBar.layoutParams as? LinearLayout.LayoutParams
-            val femaleParams = binding.femaleBar.layoutParams as? LinearLayout.LayoutParams
+            (binding.maleBar.layoutParams as? LinearLayout.LayoutParams)?.weight = maleWeight
+            (binding.femaleBar.layoutParams as? LinearLayout.LayoutParams)?.weight = femaleWeight
 
-            maleParams?.weight = maleWeight
-            femaleParams?.weight = femaleWeight
-
-            binding.maleBar.layoutParams = maleParams
-            binding.femaleBar.layoutParams = femaleParams
+            binding.maleBar.requestLayout()
+            binding.femaleBar.requestLayout()
         }
     }
 
+    /** Carrega GIF com Coil */
     private fun loadGif(url: String) {
         val imageLoader = ImageLoader.Builder(this)
             .components {
@@ -206,6 +210,7 @@ class PokemonDetailActivity : AppCompatActivity() {
         imageLoader.enqueue(request)
     }
 
+    /** Retorna cor baseada no tipo */
     private fun getTypeColor(type: String): Int {
         return when (type.trim().lowercase()) {
             "grass" -> R.color.type_grass

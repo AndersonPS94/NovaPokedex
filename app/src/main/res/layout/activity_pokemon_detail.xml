@@ -7,15 +7,18 @@
     android:background="@drawable/pokeballmainwallpaper"
     android:padding="16dp">
 
+    <!-- Animação principal -->
+
+    <!-- Card principal -->
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieAnim"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
@@ -28,10 +31,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
         android:hapticFeedbackEnabled="true"
         app:cardBackgroundColor="#EBFFFFFF"
         app:cardCornerRadius="40dp"
@@ -41,7 +40,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,7 +47,6 @@
             android:padding="16dp">
 
             <!-- Header Section -->
-
             <RelativeLayout
                 android:id="@+id/typeBackgroundLayout"
                 android:layout_width="match_parent"
@@ -66,28 +63,39 @@
                     android:src="@drawable/bulabasaur"
                     tools:ignore="ImageContrastCheck" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <!-- Botão Anterior -->
+                <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/prevButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/leftarrow"
-                    app:backgroundTint="@android:color/white"
-                    app:fabSize="normal" />
+                    android:background="@drawable/bg_type"
+                    android:backgroundTint="@color/white"
+                    android:clickable="true"
+                    android:contentDescription="Anterior"
+                    android:focusable="true"
+                    app:lottie_autoPlay="true"
+                    app:lottie_fileName="leftarrows.json"
+                    app:lottie_loop="true" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <!-- Botão Próximo -->
+                <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/nextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="12dp"
-                    android:contentDescription="TODO"
-                    android:src="@drawable/rightarrow"
-                    app:backgroundTint="@android:color/white"
-                    app:fabSize="normal" />
+                    android:background="@drawable/bg_type"
+                    android:backgroundTint="@color/white"
+                    android:clickable="true"
+                    android:contentDescription="Próximo"
+                    android:focusable="true"
+                    app:lottie_autoPlay="true"
+                    app:lottie_fileName="rightrows.json"
+                    app:lottie_loop="true" />
             </RelativeLayout>
 
             <!-- Info Section -->
@@ -116,6 +124,7 @@
                     android:textColor="@color/cor_secundaria"
                     android:textSize="20sp" />
 
+                <!-- Tipos -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -149,10 +158,9 @@
                         android:textSize="20sp"
                         android:textStyle="bold" />
                 </LinearLayout>
-
             </LinearLayout>
 
-            <!-- Description -->
+            <!-- Descrição -->
             <TextView
                 android:id="@+id/pokemonDescription"
                 android:layout_width="match_parent"
@@ -165,7 +173,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
-            <!-- Region -->
+            <!-- Região -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -185,7 +193,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppinssemibold"
-                    android:text=" Kanto"
+                    android:text="Kanto"
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -199,14 +207,12 @@
                 android:orientation="horizontal"
                 android:weightSum="3">
 
-                <!-- WEIGHT -->
+                <!-- Peso -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:contentDescription="TODO"
                     android:gravity="center_horizontal"
-                    android:importantForAccessibility="no"
                     android:orientation="vertical">
 
                     <ImageView
@@ -234,7 +240,7 @@
                         android:textSize="20sp" />
                 </LinearLayout>
 
-                <!-- HEIGHT -->
+                <!-- Altura -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -267,7 +273,7 @@
                         android:textSize="20sp" />
                 </LinearLayout>
 
-                <!-- ABILITY -->
+                <!-- Habilidade -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -299,9 +305,9 @@
                         android:textColor="@android:color/darker_gray"
                         android:textSize="20sp" />
                 </LinearLayout>
-
             </LinearLayout>
 
+            <!-- Gênero -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -354,7 +360,6 @@
                         android:layout_weight="12.5"
                         android:background="#FF6384" />
                 </LinearLayout>
-
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
