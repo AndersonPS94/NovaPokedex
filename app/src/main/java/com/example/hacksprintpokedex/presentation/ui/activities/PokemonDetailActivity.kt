@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -38,6 +39,7 @@ class PokemonDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPokemonDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        enableEdgeToEdge()
 
         val pokemonList = intent.getParcelableArrayListExtra<PokemonDetail>("pokemonList")
         val pokemonName = intent.getStringExtra("pokemonName")
@@ -85,8 +87,13 @@ class PokemonDetailActivity : AppCompatActivity() {
         }
     }
 
-
     private fun setupNavigationButtons() {
+        val lottieAnimationView = binding.lottieAnim
+        lottieAnimationView.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+        }
+
         binding.prevButton.setOnClickListener {
             if (allList.isNotEmpty()) {
                 currentIndex = (currentIndex - 1 + allList.size) % allList.size
@@ -105,6 +112,7 @@ class PokemonDetailActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun setupImageToggle() {
         binding.pokemonImage.setOnClickListener {

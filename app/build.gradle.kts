@@ -43,10 +43,12 @@ android {
 
 dependencies {
 // Coil principal
-    implementation("io.coil-kt:coil:2.5.0")
+    implementation("io.coil-kt:coil:2.7.0")
+
+    implementation(libs.lottie)
 
 // Suporte a GIFs animados
-    implementation("io.coil-kt:coil-gif:2.5.0")
+    implementation("io.coil-kt:coil-gif:2.7.0")
 
     implementation("androidx.paging:paging-runtime:3.1.1")
 

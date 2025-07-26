@@ -7,7 +7,24 @@
     android:background="@drawable/pokeballmainwallpaper"
     android:padding="16dp">
 
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnim"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_colorFilter="@color/white"
+        app:lottie_fileName="butonbackanimated.json"
+        app:lottie_loop="true" />
+
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -37,7 +54,7 @@
                 android:id="@+id/typeBackgroundLayout"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:background="@color/black"
+                android:background="@drawable/bg_type"
                 android:clipToPadding="false">
 
                 <ImageView
@@ -46,7 +63,8 @@
                     android:layout_height="250dp"
                     android:layout_centerInParent="true"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/bulabasaur" />
+                    android:src="@drawable/bulabasaur"
+                    tools:ignore="ImageContrastCheck" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/prevButton"
@@ -66,6 +84,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="12dp"
+                    android:contentDescription="TODO"
                     android:src="@drawable/rightarrow"
                     app:backgroundTint="@android:color/white"
                     app:fabSize="normal" />
@@ -142,7 +161,7 @@
                 android:fontFamily="@font/poppinssemibold"
                 android:gravity="center_horizontal"
                 android:lineSpacingExtra="4dp"
-                android:text="Carries a seed on its back from birth. As it grows, the seed also grows."
+                android:text="@string/carries_a_seed_on_its_back_from_birth_as_it_grows_the_seed_also_grows"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
@@ -151,7 +170,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:id="@+id/pokemonRegionIcon"
@@ -165,7 +185,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppinssemibold"
-                    android:text="Region: Kanto"
+                    android:text=" Kanto"
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -175,6 +195,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_marginTop="12dp"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:weightSum="3">
 
@@ -183,7 +204,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:contentDescription="TODO"
                     android:gravity="center_horizontal"
+                    android:importantForAccessibility="no"
                     android:orientation="vertical">
 
                     <ImageView
@@ -197,7 +220,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppinbslack"
-                        android:text="WEIGHT"
+                        android:text="@string/weight"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -206,7 +229,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppinssemibold"
-                        android:text="6.9 kg"
+                        android:text="@string/_6_9_kg"
                         android:textColor="@android:color/darker_gray"
                         android:textSize="20sp" />
                 </LinearLayout>
@@ -321,7 +344,8 @@
                         android:layout_width="0dp"
                         android:layout_height="30dp"
                         android:layout_weight="87.5"
-                        android:background="#36A2EB" />
+                        android:background="#36A2EB"
+                        tools:ignore="VisualLintBounds" />
 
                     <View
                         android:id="@+id/femaleBar"

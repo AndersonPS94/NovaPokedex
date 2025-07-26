@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Pokedéx</string>
+    <string name="carries_a_seed_on_its_back_from_birth_as_it_grows_the_seed_also_grows">Carries a seed on its back from birth. As it grows, the seed also grows.</string>
+    <string name="_6_9_kg">6.9 kg</string>
+    <string name="weight">WEIGHT</string>
 </resources>

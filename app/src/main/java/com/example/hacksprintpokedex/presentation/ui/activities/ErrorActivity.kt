@@ -1,5 +1,6 @@
 package com.example.hacksprintpokedex.presentation.ui.activities
 
+import android.R
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +12,7 @@ class ErrorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityErrorBinding.inflate(layoutInflater)
+binding = ActivityErrorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val errorMessage = intent.getStringExtra("errorMessage")
@@ -20,7 +21,9 @@ class ErrorActivity : AppCompatActivity() {
         binding.btnBack.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-           finish()
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+            onBackPressedDispatcher.onBackPressed()
+            finish()
         }
     }
 }
