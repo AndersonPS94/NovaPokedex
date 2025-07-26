@@ -14,6 +14,9 @@ class ErrorActivity : AppCompatActivity() {
         binding = ActivityErrorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val errorMessage = intent.getStringExtra("errorMessage")
+        binding.tvErrorMessage.text = errorMessage
+
         binding.btnBack.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
