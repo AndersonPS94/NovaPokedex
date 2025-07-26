@@ -134,15 +134,19 @@ class PokemonDetailActivity : AppCompatActivity() {
         binding.pokemonNumber.text = "#${pokemon.id.toString().padStart(3, '0')}"
         loadGif(pokemon.imageUrl)
 
-        // Fundo baseado no tipo
         if (pokemon.types.isNotEmpty()) {
             val firstTypeColor = getTypeColor(pokemon.types[0])
-            binding.typeBackgroundLayout.setBackgroundColor(ContextCompat.getColor(this, firstTypeColor))
+            val drawable = binding.typeBackgroundLayout.background?.mutate()
+            drawable?.let {
+                DrawableCompat.setTint(it, ContextCompat.getColor(this, firstTypeColor))
+            }
         } else {
-            binding.typeBackgroundLayout.setBackgroundColor(ContextCompat.getColor(this, android.R.color.transparent))
+            val drawable = binding.typeBackgroundLayout.background?.mutate()
+            drawable?.let {
+                DrawableCompat.setTint(it, ContextCompat.getColor(this, android.R.color.transparent))
+            }
         }
 
-        // Tipos
         if (pokemon.types.isNotEmpty()) {
             binding.pokemontype1.text = pokemon.types[0].replaceFirstChar { it.uppercase() }
             binding.pokemontype1.visibility = View.VISIBLE
