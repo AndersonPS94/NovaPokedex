@@ -3,11 +3,13 @@ package com.example.hacksprintpokedex.presentation.ui.activities
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.hacksprintpokedex.R
 import com.example.hacksprintpokedex.databinding.ActivityMainBinding
 import com.example.hacksprintpokedex.domain.model.PokemonDetail
@@ -35,9 +37,16 @@ class MainActivity : AppCompatActivity() {
 
         enableEdgeToEdge()
 
+
         splash.setKeepOnScreenCondition {
             (viewModel.isLoading.value ?: true) || splashMediaPlayer.isPlaying
         }
+
+
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.pikachuered)
+            .into(binding.pikachuERed)
 
         adapter = PokemonAdapter(emptyList()) { pokemon ->
             if (pokemon.name.lowercase() == "pikachu") {
@@ -55,10 +64,12 @@ class MainActivity : AppCompatActivity() {
         binding.pokemonList.layoutManager = LinearLayoutManager(this)
         binding.pokemonList.adapter = adapter
 
+        // Observa a lista
         viewModel.pokemonList.observe(this) { list ->
             adapter.updateList(list)
         }
 
+        // Filtro da SearchView
         binding.searchView.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(q: String?) = false
             override fun onQueryTextChange(q: String?): Boolean {
