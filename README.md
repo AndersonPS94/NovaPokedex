@@ -6,11 +6,7 @@ Este repositório contém uma aplicação Android inspirada na Pokédex, desenvo
 
 ## 📸 Demonstração
 
-https://github.com/user-attachments/assets/aaf6d9d8-c00f-4b4c-a63b-fc0ce0acd43e
-
-
-
-
+https://github.com/user-attachments/assets/d8b3ffed-147d-4177-878a-3d610a112cd2
 
 
 > Exibição de lista de Pokémons, detalhes individuais com stats, tipos, regiões e muito mais!
