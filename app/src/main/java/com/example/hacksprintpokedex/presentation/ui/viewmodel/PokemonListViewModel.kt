@@ -27,7 +27,7 @@ class PokemonListViewModel @Inject constructor(
         _isLoading.value = true
         viewModelScope.launch {
             try {
-                val basicPokemons = repository.getPokemonList(380)
+                val basicPokemons = repository.getPokemonList(385)
                 val detailedPokemonList = basicPokemons.map { pokemon ->
                     async { repository.getPokemonDetail(pokemon.name) }
                 }.awaitAll()
