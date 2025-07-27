@@ -34,7 +34,9 @@ class PokemonAdapter(
             tvPokemonNumber.text = "#${pokemon.id.toString().padStart(3, '0')}"
             val imageUrl =
                 "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png"
-            Picasso.get().load(imageUrl).into(imagePokemon)
+            Picasso.get()
+                .load(imageUrl)
+                .into(imagePokemon)
 
             layoutTypes.removeAllViews()
             for (type in pokemon.types) {

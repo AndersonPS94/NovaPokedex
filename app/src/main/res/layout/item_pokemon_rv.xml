@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:padding="12dp">
 
-        <!-- Pokémon Image -->
         <ImageView
             android:id="@+id/image_pokemon"
             android:layout_width="120dp"
@@ -27,7 +26,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Name -->
         <TextView
             android:id="@+id/tv_pokemon_name"
             android:layout_width="0dp"
@@ -41,7 +39,6 @@
             app:layout_constraintStart_toEndOf="@id/image_pokemon"
             app:layout_constraintTop_toTopOf="@id/image_pokemon" />
 
-        <!-- Number -->
         <TextView
             android:id="@+id/tv_pokemon_number"
             android:layout_width="wrap_content"
@@ -53,7 +50,6 @@
             app:layout_constraintStart_toStartOf="@id/tv_pokemon_name"
             app:layout_constraintTop_toBottomOf="@id/tv_pokemon_name" />
 
-        <!-- Types -->
         <LinearLayout
             android:id="@+id/layout_types"
             android:layout_width="wrap_content"

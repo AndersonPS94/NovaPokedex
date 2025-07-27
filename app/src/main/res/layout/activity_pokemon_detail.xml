@@ -7,10 +7,6 @@
     android:background="@drawable/pokeballmainwallpaper"
     android:padding="16dp">
 
-    <!-- Animação principal -->
-
-    <!-- Card principal -->
-
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieAnim"
         android:layout_width="50dp"
@@ -63,7 +59,6 @@
                     android:src="@drawable/bulabasaur"
                     tools:ignore="ImageContrastCheck" />
 
-                <!-- Botão Anterior -->
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/prevButton"
                     android:layout_width="50dp"
@@ -80,7 +75,6 @@
                     app:lottie_fileName="leftarrows.json"
                     app:lottie_loop="true" />
 
-                <!-- Botão Próximo -->
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/nextButton"
                     android:layout_width="50dp"
@@ -98,7 +92,6 @@
                     app:lottie_loop="true" />
             </RelativeLayout>
 
-            <!-- Info Section -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -124,7 +117,6 @@
                     android:textColor="@color/cor_secundaria"
                     android:textSize="20sp" />
 
-                <!-- Tipos -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -160,7 +152,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Descrição -->
             <TextView
                 android:id="@+id/pokemonDescription"
                 android:layout_width="match_parent"
@@ -173,7 +164,6 @@
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
-            <!-- Região -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -198,7 +188,6 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-            <!-- Stats -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -207,7 +196,6 @@
                 android:orientation="horizontal"
                 android:weightSum="3">
 
-                <!-- Peso -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -240,7 +228,6 @@
                         android:textSize="20sp" />
                 </LinearLayout>
 
-                <!-- Altura -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -273,7 +260,6 @@
                         android:textSize="20sp" />
                 </LinearLayout>
 
-                <!-- Habilidade -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -307,7 +293,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Gênero -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -362,5 +347,7 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

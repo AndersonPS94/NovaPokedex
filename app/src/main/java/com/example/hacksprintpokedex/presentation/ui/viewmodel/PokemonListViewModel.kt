@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.hacksprintpokedex.domain.model.PokemonDetail // Importado PokemonDetail
+import com.example.hacksprintpokedex.domain.model.PokemonDetail
 import com.example.hacksprintpokedex.domain.repository.PokemonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async

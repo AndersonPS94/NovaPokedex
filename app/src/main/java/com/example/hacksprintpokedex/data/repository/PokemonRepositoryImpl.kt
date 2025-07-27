@@ -55,7 +55,7 @@ class PokemonRepositoryImpl @Inject constructor(
             id = detail.id,
             name = detail.name,
             imageUrl = imageUrl,
-            shinyImageUrl = shinyImageUrl, // ✅ Adicionado
+            shinyImageUrl = shinyImageUrl,
             types = detail.types.sortedBy { it.slot }.map { it.type.name },
             weight = detail.weight / 10.0,
             height = detail.height / 10.0,
