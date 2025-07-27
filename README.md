@@ -1,43 +1,52 @@
-# 📱 Pokédex Android App
+# 📱 Pokédex Android App — MVVM + Clean Architecture + Hilt
 
-Este repositório contém uma aplicação Android inspirada na Pokédex, desenvolvida como projeto pessoal com o objetivo de aprofundar conhecimentos em arquitetura de software, boas práticas de desenvolvimento e bibliotecas modernas do ecossistema Android.
+![Kotlin](https://img.shields.io/badge/Kotlin-1.9-blue?logo=kotlin)
+![MVVM](https://img.shields.io/badge/Architecture-MVVM-brightgreen)
+![Clean Architecture](https://img.shields.io/badge/Clean%20Architecture-✔-orange)
+![Hilt](https://img.shields.io/badge/DI-Hilt-informational)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
+
+---
+
+Uma Pokédex moderna para Android, construída com **MVVM**, **Clean Architecture** e **Injeção de Dependências com Hilt**.  
+O app consome dados da [PokéAPI](https://pokeapi.co) e apresenta listagem, detalhes completos dos Pokémons e recursos avançados, tudo seguindo boas práticas e arquitetura desacoplada.
 
 ---
 
 ## 📸 Demonstração
 
+🎥 **Vídeo do App**  
+
+
 https://github.com/user-attachments/assets/d8b3ffed-147d-4177-878a-3d610a112cd2
 
+📷 **Capturas de Tela**  
 <img src="https://github.com/user-attachments/assets/55d76a26-804e-4abc-9c89-2bf5118b7613" width="300" />
 <img src="https://github.com/user-attachments/assets/bb12f741-9a05-4b11-9e96-c623bf9189b9" width="300" />
 <img src="https://github.com/user-attachments/assets/bc7953cf-7902-4914-9e91-440a42ed48b8" width="300" />
 <img src="https://github.com/user-attachments/assets/10129391-0fc3-4dc3-aab2-4d5a4aa1ec2e" width="300" />
 <img src="https://github.com/user-attachments/assets/b8e3c707-90f7-45ad-8cb8-80b09974771c" width="300" />
 
-
-
-
-> Exibição de lista de Pokémons, detalhes individuais com stats, tipos, regiões e muito mais!
+> ✅ Lista de Pokémons, detalhes completos com stats, tipos, regiões, sprites normais e shiny.
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
-Este projeto foi desenvolvido utilizando as seguintes tecnologias e padrões:
-
-* **Kotlin** — Linguagem principal do app.
-* **XML** — Utilizado para construção das interfaces.
-* **MVVM (Model-View-ViewModel)** — Separação clara entre camada de UI, lógica de negócios e dados.
-* **Clean Architecture** — Organização modular e desacoplada em camadas: presentation, domain e data.
-* **Retrofit** — Para consumo da [PokéAPI](https://pokeapi.co).
-* **Room Database** — Armazenamento local dos Pokémons.
-* **RecyclerView** — Para exibição da lista de Pokémons.
-* **ViewBinding** — Para acesso seguro às views.
-* **Coroutines** — Para chamadas assíncronas.
-* **Injeção de Dependências**.
-* **Testes Unitários** — Cobertura da lógica com testes automatizados.
+- **Kotlin** — Linguagem principal do app
+- **XML** — Interfaces modernas e responsivas
+- **MVVM (Model-View-ViewModel)** — Separação de responsabilidades
+- **Clean Architecture** — Camadas `presentation`, `domain` e `data`
+- **Hilt** — Injeção de Dependência
+- **Retrofit + Gson** — Consumo da API [PokéAPI](https://pokeapi.co)
+- **Room Database** — Persistência local para modo offline
+- **Coroutines + Flow** — Programação assíncrona
+- **RecyclerView** — Exibição performática da lista
+- **ViewBinding** — Acesso seguro às Views
+- **Testes Unitários** — Garantia de qualidade da lógica de negócio
 
 ---
+
 
 ## ✅ Funcionalidades
 
@@ -54,7 +63,9 @@ Este projeto foi desenvolvido utilizando as seguintes tecnologias e padrões:
 * 🧠 Carregamento inteligente via coroutines.
 * ⚠️ Tratamento de erros e feedback visual.
 
+
 ---
+
 
 ## 📄 Aprendizados
 
