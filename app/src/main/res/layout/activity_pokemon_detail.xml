@@ -6,39 +6,41 @@
     android:layout_height="match_parent"
     android:background="@drawable/pokeballmainwallpaper">
 
+    <!-- ScrollView para permitir rolagem -->
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieAnim"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginBottom="19dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/scrollContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.824"
+        app:layout_constraintVertical_bias="0.916"
         app:lottie_autoPlay="true"
         app:lottie_colorFilter="@color/white"
         app:lottie_fileName="butonbackanimated.json"
         app:lottie_loop="true" />
 
-    <!-- ScrollView para permitir rolagem -->
     <ScrollView
         android:id="@+id/scrollContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
         android:fillViewport="true"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.965">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:hapticFeedbackEnabled="true"
@@ -354,7 +356,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="12.5"
-                            android:background="#FF6384"/>
+                            android:background="#FF6384" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
