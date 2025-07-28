@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pokeballmainwallpaper"
-    android:padding="16dp">
+    android:background="@drawable/pokeballmainwallpaper">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieAnim"
@@ -15,9 +14,10 @@
         android:layout_marginBottom="19dp"
         app:layout_constraintBottom_toTopOf="@+id/scrollContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
+        app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.824"
         app:lottie_autoPlay="true"
         app:lottie_colorFilter="@color/white"
         app:lottie_fileName="butonbackanimated.json"
@@ -26,14 +26,15 @@
     <!-- ScrollView para permitir rolagem -->
     <ScrollView
         android:id="@+id/scrollContainer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
         android:fillViewport="true"
         android:scrollbars="none"
-        app:layout_constraintTop_toBottomOf="@id/lottieAnim"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
@@ -43,13 +44,13 @@
             android:hapticFeedbackEnabled="true"
             app:cardBackgroundColor="#EBFFFFFF"
             app:cardCornerRadius="40dp"
-            app:cardElevation="10dp">
+            app:cardElevation="40dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="8dp">
 
                 <!-- Header Section -->
                 <RelativeLayout
@@ -306,7 +307,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="40dp">
 
                     <ImageView
                         android:id="@+id/statGenderIcon"
@@ -352,7 +354,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="12.5"
-                            android:background="#FF6384" />
+                            android:background="#FF6384"/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
