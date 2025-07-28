@@ -11,10 +11,9 @@
         android:id="@+id/lottieAnim"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_gravity="center"
         android:layout_marginTop="44dp"
         android:layout_marginBottom="19dp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintBottom_toTopOf="@+id/scrollContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,332 +23,339 @@
         app:lottie_fileName="butonbackanimated.json"
         app:lottie_loop="true" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:hapticFeedbackEnabled="true"
-        app:cardBackgroundColor="#EBFFFFFF"
-        app:cardCornerRadius="40dp"
-        app:cardElevation="10dp"
+    <!-- ScrollView para permitir rolagem -->
+    <ScrollView
+        android:id="@+id/scrollContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/lottieAnim"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_margin="20dp"
+            android:hapticFeedbackEnabled="true"
+            app:cardBackgroundColor="#EBFFFFFF"
+            app:cardCornerRadius="40dp"
+            app:cardElevation="10dp">
 
-            <!-- Header Section -->
-            <RelativeLayout
-                android:id="@+id/typeBackgroundLayout"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:background="@drawable/bg_type"
-                android:clipToPadding="false">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <ImageView
-                    android:id="@+id/pokemonImage"
-                    android:layout_width="250dp"
+                <!-- Header Section -->
+                <RelativeLayout
+                    android:id="@+id/typeBackgroundLayout"
+                    android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    android:layout_centerInParent="true"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/bulabasaur"
-                    tools:ignore="ImageContrastCheck" />
-
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/prevButton"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="12dp"
                     android:background="@drawable/bg_type"
-                    android:backgroundTint="@color/white"
-                    android:clickable="true"
-                    android:contentDescription="Anterior"
-                    android:focusable="true"
-                    app:lottie_autoPlay="true"
-                    app:lottie_fileName="leftarrows.json"
-                    app:lottie_loop="true" />
+                    android:clipToPadding="false">
 
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/nextButton"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="12dp"
-                    android:background="@drawable/bg_type"
-                    android:backgroundTint="@color/white"
-                    android:clickable="true"
-                    android:contentDescription="Próximo"
-                    android:focusable="true"
-                    app:lottie_autoPlay="true"
-                    app:lottie_fileName="rightrows.json"
-                    app:lottie_loop="true" />
-            </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/pokemonImage"
+                        android:layout_width="250dp"
+                        android:layout_height="250dp"
+                        android:layout_centerInParent="true"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/bulabasaur"
+                        tools:ignore="ImageContrastCheck" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/pokemonName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppinbslack"
-                    android:text="Bulbasaur"
-                    android:textColor="@android:color/black"
-                    android:textSize="30sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/pokemonNumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppinssemibold"
-                    android:text="#001"
-                    android:textColor="@color/cor_secundaria"
-                    android:textSize="20sp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/pokemontype1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/prevButton"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="12dp"
                         android:background="@drawable/bg_type"
-                        android:fontFamily="@font/poppinbslack"
-                        android:paddingHorizontal="10dp"
-                        android:paddingVertical="4dp"
-                        android:text="Grass"
-                        android:textColor="@android:color/white"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:backgroundTint="@color/white"
+                        android:clickable="true"
+                        android:contentDescription="Anterior"
+                        android:focusable="true"
+                        app:lottie_autoPlay="true"
+                        app:lottie_fileName="leftarrows.json"
+                        app:lottie_loop="true" />
 
-                    <TextView
-                        android:id="@+id/pokemontype2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/nextButton"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="12dp"
                         android:background="@drawable/bg_type"
-                        android:fontFamily="@font/poppinbslack"
-                        android:paddingHorizontal="10dp"
-                        android:paddingVertical="4dp"
-                        android:text="Poison"
-                        android:textColor="@android:color/white"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/pokemonDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/poppinssemibold"
-                android:gravity="center_horizontal"
-                android:lineSpacingExtra="4dp"
-                android:text="@string/carries_a_seed_on_its_back_from_birth_as_it_grows_the_seed_also_grows"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                tools:ignore="UseCompoundDrawables">
-
-                <ImageView
-                    android:id="@+id/pokemonRegionIcon"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginEnd="8dp"
-                    android:src="@drawable/map" />
-
-                <TextView
-                    android:id="@+id/pokemonRegion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppinssemibold"
-                    android:text="Kanto"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="12dp"
-                android:baselineAligned="false"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/statWeightIcon"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/business" />
-
-                    <TextView
-                        android:id="@+id/statWeightLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppinbslack"
-                        android:text="@string/weight"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/statWeightValue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppinssemibold"
-                        android:text="@string/_6_9_kg"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/statHeightIcon"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/resize" />
-
-                    <TextView
-                        android:id="@+id/statHeightLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppinbslack"
-                        android:text="HEIGHT"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/statHeightValue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppinssemibold"
-                        android:text="0.7 m"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:id="@+id/statAbilityIcon"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/thunder" />
-
-                    <TextView
-                        android:id="@+id/statAbilityLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppinbslack"
-                        android:text="ABILITY"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/statAbilityValue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppinssemibold"
-                        android:text="Overgrow"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="20sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/statGenderIcon"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:src="@drawable/gender" />
-
-                <TextView
-                    android:id="@+id/statGenderLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppinbslack"
-                    android:text="GENDER"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/pokemonGender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppinssemibold"
-                    android:text="87.5% 12.5%"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="20sp" />
+                        android:backgroundTint="@color/white"
+                        android:clickable="true"
+                        android:contentDescription="Próximo"
+                        android:focusable="true"
+                        app:lottie_autoPlay="true"
+                        app:lottie_fileName="rightrows.json"
+                        app:lottie_loop="true" />
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="15dp"
-                    android:layout_marginTop="4dp"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-                    <View
-                        android:id="@+id/maleBar"
-                        android:layout_width="0dp"
-                        android:layout_height="30dp"
-                        android:layout_weight="87.5"
-                        android:background="#36A2EB"
-                        tools:ignore="VisualLintBounds" />
+                    <TextView
+                        android:id="@+id/pokemonName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppinbslack"
+                        android:text="Bulbasaur"
+                        android:textColor="@android:color/black"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
 
-                    <View
-                        android:id="@+id/femaleBar"
+                    <TextView
+                        android:id="@+id/pokemonNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppinssemibold"
+                        android:text="#001"
+                        android:textColor="@color/cor_secundaria"
+                        android:textSize="20sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/pokemontype1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:background="@drawable/bg_type"
+                            android:fontFamily="@font/poppinbslack"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp"
+                            android:text="Grass"
+                            android:textColor="@android:color/white"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/pokemontype2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_type"
+                            android:fontFamily="@font/poppinbslack"
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="4dp"
+                            android:text="Poison"
+                            android:textColor="@android:color/white"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/pokemonDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:gravity="center_horizontal"
+                    android:lineSpacingExtra="4dp"
+                    android:text="@string/carries_a_seed_on_its_back_from_birth_as_it_grows_the_seed_also_grows"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    tools:ignore="UseCompoundDrawables">
+
+                    <ImageView
+                        android:id="@+id/pokemonRegionIcon"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/map" />
+
+                    <TextView
+                        android:id="@+id/pokemonRegion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppinssemibold"
+                        android:text="Kanto"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="12dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="12.5"
-                        android:background="#FF6384" />
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/statWeightIcon"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/business" />
+
+                        <TextView
+                            android:id="@+id/statWeightLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppinbslack"
+                            android:text="@string/weight"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/statWeightValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppinssemibold"
+                            android:text="@string/_6_9_kg"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/statHeightIcon"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/resize" />
+
+                        <TextView
+                            android:id="@+id/statHeightLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppinbslack"
+                            android:text="HEIGHT"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/statHeightValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppinssemibold"
+                            android:text="0.7 m"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/statAbilityIcon"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/thunder" />
+
+                        <TextView
+                            android:id="@+id/statAbilityLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppinbslack"
+                            android:text="ABILITY"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/statAbilityValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppinssemibold"
+                            android:text="Overgrow"
+                            android:textColor="@android:color/darker_gray"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/statGenderIcon"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/gender" />
+
+                    <TextView
+                        android:id="@+id/statGenderLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppinbslack"
+                        android:text="GENDER"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/pokemonGender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppinssemibold"
+                        android:text="87.5% 12.5%"
+                        android:textColor="@android:color/darker_gray"
+                        android:textSize="20sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="15dp"
+                        android:layout_marginTop="4dp"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:id="@+id/maleBar"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="87.5"
+                            android:background="#36A2EB"
+                            tools:ignore="VisualLintBounds" />
+
+                        <View
+                            android:id="@+id/femaleBar"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="12.5"
+                            android:background="#FF6384" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

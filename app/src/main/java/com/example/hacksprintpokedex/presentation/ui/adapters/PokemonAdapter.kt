@@ -7,12 +7,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hacksprintpokedex.R
 import com.example.hacksprintpokedex.databinding.ItemPokemonRvBinding
-import com.example.hacksprintpokedex.domain.model.Pokemon // IMPORTANTE: Agora importa o modelo UNIFICADO Pokemon
+import com.example.hacksprintpokedex.domain.model.Pokemon
 import com.squareup.picasso.Picasso
 import android.content.res.ColorStateList
 
 class PokemonAdapter(
-
     private var items: List<Pokemon>,
     private val onPokemonClick: (Pokemon) -> Unit
 ) : RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() {
@@ -24,21 +23,26 @@ class PokemonAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonViewHolder {
         val binding = ItemPokemonRvBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false)
+            LayoutInflater.from(parent.context), parent, false
+        )
         return PokemonViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: PokemonViewHolder, position: Int) {
         val pokemon = items[position]
         with(holder.binding) {
+            // Nome e número
             tvPokemonName.text = pokemon.name.replaceFirstChar { it.uppercase() }
             tvPokemonNumber.text = "#${pokemon.id.toString().padStart(3, '0')}"
+
+            // Imagem oficial
             val imageUrl =
                 "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png"
             Picasso.get()
                 .load(imageUrl)
                 .into(imagePokemon)
 
+            // Tipos com cor dinâmica
             layoutTypes.removeAllViews()
             for (type in pokemon.types) {
                 val typeView = TextView(root.context).apply {
@@ -66,13 +70,18 @@ class PokemonAdapter(
         notifyDataSetChanged()
     }
 
+
     fun filterList(query: String) {
         val filtered = if (query.isEmpty()) {
             fullList
         } else {
-            fullList.filter {
-                it.name.contains(query, ignoreCase = true) ||
-                        it.types.any { type -> type.contains(query, ignoreCase = true) }
+            val lowerQuery = query.lowercase()
+            fullList.filter { pokemon ->
+                val nameMatch = pokemon.name.lowercase().contains(lowerQuery)
+                val idMatch = pokemon.id.toString() == lowerQuery
+                val typeMatch = pokemon.types.any { it.lowercase().contains(lowerQuery) }
+
+                nameMatch || idMatch || typeMatch
             }
         }
         items = filtered
@@ -80,6 +89,7 @@ class PokemonAdapter(
     }
 
     fun getItem(position: Int): Pokemon = items[position]
+
 
     private fun getColorByType(type: String): Int {
         return when (type.lowercase()) {

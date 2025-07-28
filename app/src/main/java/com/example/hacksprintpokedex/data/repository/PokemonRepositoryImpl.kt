@@ -8,8 +8,8 @@ import com.example.hacksprintpokedex.domain.repository.PokemonRepository
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import com.example.hacksprintpokedex.data.mapper.toDomainPokemon // Existing import
-import com.example.hacksprintpokedex.data.mapper.toLocalPokemon // <--- NEW IMPORT: Import the new local mapper
+import com.example.hacksprintpokedex.data.mapper.toDomainPokemon
+import com.example.hacksprintpokedex.data.mapper.toLocalPokemon
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
@@ -64,14 +64,12 @@ class PokemonRepositoryImpl @Inject constructor(
             val detail = detailResponse.body()!!
             val species = speciesResponse.body()!!
 
-
-            val formattedName = detail.name.lowercase()
+            val formattedName = normalizePokemonName(detail.name)
 
             val imageUrl =
                 "https://play.pokemonshowdown.com/sprites/ani/${formattedName}.gif"
             val shinyImageUrl =
                 "https://play.pokemonshowdown.com/sprites/ani-shiny/${formattedName}.gif"
-            // ------------------------------------------------------------------
 
             val description = species.flavorTextEntries.firstOrNull {
                 it.language.name == "en" || it.language.name == "pt"
@@ -95,5 +93,15 @@ class PokemonRepositoryImpl @Inject constructor(
                 genderRate = species.genderRate
             )
         }
+    }
+
+    private fun normalizePokemonName(name: String): String {
+        return name.lowercase()
+            .replace("♀", "f")
+            .replace("♂", "m")
+            .replace("-", "")
+            .replace(" ", "")
+            .replace(".", "")
+            .replace("'", "")
     }
 }
