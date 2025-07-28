@@ -91,8 +91,6 @@ Durante o desenvolvimento, foram reforçados conceitos como:
 ## 📋 TODO
 
 * [ ] Adicionar testes instrumentados com **Espresso**
-* [ ] Criar sistema de favoritos usando Room
-* [ ] Adicionar suporte offline completo
 
 ---
 
