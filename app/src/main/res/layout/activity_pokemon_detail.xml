@@ -19,7 +19,7 @@
         app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.916"
+        app:layout_constraintVertical_bias="0.433"
         app:lottie_autoPlay="true"
         app:lottie_colorFilter="@color/white"
         app:lottie_fileName="butonbackanimated.json"
