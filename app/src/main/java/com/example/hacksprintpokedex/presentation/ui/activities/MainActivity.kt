@@ -3,7 +3,6 @@ package com.example.hacksprintpokedex.presentation.ui.activities
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -27,49 +26,69 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splash = installSplashScreen()
-
-        splashMediaPlayer = MediaPlayer.create(this, R.raw.pikapipikachu)
-        splashMediaPlayer.start()
-
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         enableEdgeToEdge()
 
+        initSplashScreen(splash)
+        initGifAnimation()
+        initRecyclerView()
+        observePokemonList()
+        setupSearchView()
+
+        viewModel.loadPokemons()
+    }
+
+    /** Configura a splash e toca o som */
+    private fun initSplashScreen(splash: androidx.core.splashscreen.SplashScreen) {
+        splashMediaPlayer = MediaPlayer.create(this, R.raw.pikapipikachu)
+        splashMediaPlayer.start()
 
         splash.setKeepOnScreenCondition {
             (viewModel.isLoading.value ?: true) || splashMediaPlayer.isPlaying
         }
+    }
 
-
+    /** Exibe o GIF animado */
+    private fun initGifAnimation() {
+        val pikachuGotchaSound = MediaPlayer.create(this, R.raw.aaaepikachu)
         Glide.with(this)
             .asGif()
             .load(R.drawable.pikachuered)
             .into(binding.pikachuERed)
 
+        binding.pikachuERed.setOnClickListener {
+            if(!pikachuGotchaSound.isPlaying) {
+                pikachuGotchaSound.start()
+
+            }
+        }
+    }
+
+    /** Configura RecyclerView e Adapter */
+    private fun initRecyclerView() {
         adapter = PokemonAdapter(emptyList()) { pokemon ->
             if (pokemon.name.lowercase() == "pikachu") {
-                val pikachuSound = MediaPlayer.create(this, R.raw.pikachu)
-                pikachuSound.setOnCompletionListener {
-                    pikachuSound.release()
-                    goToDetail(pokemon)
-                }
-                pikachuSound.start()
+                playPikachuSoundThenNavigate(pokemon)
             } else {
                 goToDetail(pokemon)
             }
         }
-
         binding.pokemonList.layoutManager = LinearLayoutManager(this)
         binding.pokemonList.adapter = adapter
+    }
 
-        // Observa a lista
+    /** Observa a lista de pokémons e atualiza o adapter */
+    private fun observePokemonList() {
         viewModel.pokemonList.observe(this) { list ->
             adapter.updateList(list)
         }
+    }
 
-        // Filtro da SearchView
+    /** Configura a SearchView para filtrar pokémons */
+    private fun setupSearchView() {
         binding.searchView.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(q: String?) = false
             override fun onQueryTextChange(q: String?): Boolean {
@@ -77,10 +96,19 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
         })
-
-        viewModel.loadPokemons()
     }
 
+    /** Toca som do Pikachu antes de ir para a tela de detalhes */
+    private fun playPikachuSoundThenNavigate(pokemon: PokemonDetail) {
+        val pikachuSound = MediaPlayer.create(this, R.raw.pikachu)
+        pikachuSound.setOnCompletionListener {
+            pikachuSound.release()
+            goToDetail(pokemon)
+        }
+        pikachuSound.start()
+    }
+
+    /** Navega para a tela de detalhes */
     private fun goToDetail(pokemon: PokemonDetail) {
         val intent = Intent(this, PokemonDetailActivity::class.java).apply {
             putParcelableArrayListExtra("pokemonList", ArrayList(viewModel.pokemonList.value ?: emptyList()))

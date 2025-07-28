@@ -15,6 +15,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
+        android:animateLayoutChanges="true"
+        android:animationCache="true"
         android:background="@drawable/backgroundshapeitem"
         android:iconifiedByDefault="false"
         android:outlineAmbientShadowColor="@color/black"
@@ -48,10 +50,11 @@
 
     <ImageView
         android:id="@+id/pikachu_e_red"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="70dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.796"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/pikachuered" />
