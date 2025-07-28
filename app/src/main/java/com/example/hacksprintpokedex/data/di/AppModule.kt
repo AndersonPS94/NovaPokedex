@@ -31,9 +31,9 @@ object AppModule {
     @Singleton
     fun providePokemonRepository(
         apiService: PokeApiService,
-        pokemonDao: PokemonDao // <--- AGORA INJETA O PokemonDao AQUI
+        pokemonDao: PokemonDao
     ): PokemonRepository {
-        return PokemonRepositoryImpl(apiService, pokemonDao) // <--- E PASSA ELE PARA O CONSTRUTOR
+        return PokemonRepositoryImpl(apiService, pokemonDao)
     }
 
     @Provides

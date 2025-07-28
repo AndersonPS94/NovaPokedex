@@ -1,10 +1,8 @@
-// app/src/main/java/com/example/hacksprintpokedex/data/local/entities/Pokemon.kt
 package com.example.hacksprintpokedex.data.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-// --- CRITICAL: Ensure this is "pokemon_table" ---
 @Entity(tableName = "pokemon_table")
 data class Pokemon(
     @PrimaryKey val id: Int,

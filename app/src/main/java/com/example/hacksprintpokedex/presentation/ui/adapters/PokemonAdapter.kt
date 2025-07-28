@@ -12,12 +12,11 @@ import com.squareup.picasso.Picasso
 import android.content.res.ColorStateList
 
 class PokemonAdapter(
-    // O adaptador agora lida com uma lista de objetos `Pokemon`
+
     private var items: List<Pokemon>,
-    private val onPokemonClick: (Pokemon) -> Unit // O callback também recebe o objeto Pokemon
+    private val onPokemonClick: (Pokemon) -> Unit
 ) : RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() {
 
-    // Mantém uma cópia completa da lista para operações de filtragem
     private var fullList: List<Pokemon> = items.toList()
 
     class PokemonViewHolder(val binding: ItemPokemonRvBinding) :
@@ -40,7 +39,6 @@ class PokemonAdapter(
                 .load(imageUrl)
                 .into(imagePokemon)
 
-            // Remove todas as views existentes para evitar duplicação em reutilização
             layoutTypes.removeAllViews()
             for (type in pokemon.types) {
                 val typeView = TextView(root.context).apply {
@@ -61,28 +59,26 @@ class PokemonAdapter(
 
     override fun getItemCount(): Int = items.size
 
-    // Este método agora espera uma lista de `Pokemon`
+
     fun updateList(newList: List<Pokemon>) {
         items = newList
         fullList = newList.toList()
         notifyDataSetChanged()
     }
 
-    // O método de filtragem também opera sobre a lista de `Pokemon`
     fun filterList(query: String) {
         val filtered = if (query.isEmpty()) {
             fullList
         } else {
             fullList.filter {
                 it.name.contains(query, ignoreCase = true) ||
-                        it.types.any { type -> type.contains(query, ignoreCase = true) } // Permite filtrar por tipo também
+                        it.types.any { type -> type.contains(query, ignoreCase = true) }
             }
         }
         items = filtered
         notifyDataSetChanged()
     }
 
-    // Retorna um `Pokemon` em uma dada posição
     fun getItem(position: Int): Pokemon = items[position]
 
     private fun getColorByType(type: String): Int {

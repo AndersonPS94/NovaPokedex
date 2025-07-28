@@ -28,11 +28,9 @@ class PokemonDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPokemonDetailBinding
     private val viewModel: PokemonDetailViewModel by viewModels()
 
-    // Agora armazenamos apenas os nomes para navegação
     private var allPokemonNames: List<String> = emptyList()
     private var currentIndex: Int = -1
     private var showingShiny = false
-    // currentPokemon será atualizado a cada carregamento via ViewModel
     private lateinit var currentPokemon: PokemonDetail
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,13 +39,11 @@ class PokemonDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
         enableEdgeToEdge()
 
-        // Recebe a lista de nomes e o nome do Pokémon inicial
         val pokemonNamesList = intent.getStringArrayListExtra("pokemonNamesList")
         val pokemonName = intent.getStringExtra("pokemonName")
 
         if (pokemonNamesList != null && pokemonName != null) {
             allPokemonNames = pokemonNamesList
-            // Encontra o índice do Pokémon atual na lista de nomes
             currentIndex = allPokemonNames.indexOfFirst { it.equals(pokemonName, ignoreCase = true) }
 
             if (currentIndex == -1) {
@@ -55,12 +51,9 @@ class PokemonDetailActivity : AppCompatActivity() {
                 finish()
                 return
             }
-            // Carrega os detalhes do Pokémon inicial usando o ViewModel
             viewModel.load(allPokemonNames[currentIndex])
         } else if (pokemonName != null) {
-            // Caso a atividade seja iniciada apenas com um nome (sem lista para navegação)
             viewModel.load(pokemonName)
-            // allPokemonNames permanecerá vazio, então os botões de navegação não funcionarão neste caso
         } else {
             Toast.makeText(this, "Dados insuficientes para exibir Pokémon", Toast.LENGTH_SHORT)
                 .show()
@@ -76,7 +69,6 @@ class PokemonDetailActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.pokemonDetail.observe(this) { pokemon ->
             pokemon?.let {
-                // Atualiza o currentPokemon com os detalhes completos recebidos do ViewModel
                 currentPokemon = it
                 updateUI(it)
             }
@@ -106,9 +98,7 @@ class PokemonDetailActivity : AppCompatActivity() {
 
         binding.prevButton.setOnClickListener {
             if (allPokemonNames.isNotEmpty()) {
-                // Calcula o índice do Pokémon anterior na lista de nomes
                 currentIndex = (currentIndex - 1 + allPokemonNames.size) % allPokemonNames.size
-                // Carrega os detalhes do novo Pokémon usando o ViewModel
                 viewModel.load(allPokemonNames[currentIndex])
             } else {
                 Toast.makeText(this, "Nenhum Pokémon na lista para navegar", Toast.LENGTH_SHORT).show()
@@ -117,9 +107,7 @@ class PokemonDetailActivity : AppCompatActivity() {
 
         binding.nextButton.setOnClickListener {
             if (allPokemonNames.isNotEmpty()) {
-                // Calcula o índice do próximo Pokémon na lista de nomes
                 currentIndex = (currentIndex + 1) % allPokemonNames.size
-                // Carrega os detalhes do novo Pokémon usando o ViewModel
                 viewModel.load(allPokemonNames[currentIndex])
             } else {
                 Toast.makeText(this, "Nenhum Pokémon na lista para navegar", Toast.LENGTH_SHORT).show()
@@ -129,7 +117,6 @@ class PokemonDetailActivity : AppCompatActivity() {
 
     private fun setupImageToggle() {
         binding.pokemonImage.setOnClickListener {
-            // Verifica se currentPokemon foi inicializado antes de tentar acessar suas propriedades
             if (::currentPokemon.isInitialized) {
                 showingShiny = !showingShiny
                 val imageUrl = if (showingShiny) currentPokemon.shinyImageUrl else currentPokemon.imageUrl
@@ -139,8 +126,7 @@ class PokemonDetailActivity : AppCompatActivity() {
     }
 
     private fun updateUI(pokemon: PokemonDetail) {
-        // currentPokemon já é atualizado no observeViewModel, não precisa de reatribuição aqui
-        showingShiny = false // Reseta para a imagem normal ao carregar um novo Pokémon
+        showingShiny = false
 
         binding.pokemonName.text = pokemon.name.replaceFirstChar { it.uppercase() }
         binding.pokemonNumber.text = "#${pokemon.id.toString().padStart(3, '0')}"

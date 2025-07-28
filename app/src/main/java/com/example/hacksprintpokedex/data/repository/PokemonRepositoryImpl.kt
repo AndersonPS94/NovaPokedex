@@ -39,8 +39,6 @@ class PokemonRepositoryImpl @Inject constructor(
                         if (detailResponse.isSuccessful) {
                             val detail = detailResponse.body()
                             detail?.let {
-                                // Reusing getPokemonDetail ensures consistent URL generation
-                                // and gets all the necessary details.
                                 val fullDetail = getPokemonDetail(it.name)
                                 fullDetail.toLocalPokemon()
                             }
@@ -66,8 +64,7 @@ class PokemonRepositoryImpl @Inject constructor(
             val detail = detailResponse.body()!!
             val species = speciesResponse.body()!!
 
-            // --- CHANGE HERE: Use Pokémon Showdown URLs for high-quality GIFs ---
-            // Ensure the Pokémon name is lowercase for these URLs
+
             val formattedName = detail.name.lowercase()
 
             val imageUrl =
@@ -77,7 +74,7 @@ class PokemonRepositoryImpl @Inject constructor(
             // ------------------------------------------------------------------
 
             val description = species.flavorTextEntries.firstOrNull {
-                it.language.name == "en" || it.language.name == "pt" // You can keep PT if available
+                it.language.name == "en" || it.language.name == "pt"
             }?.flavorText?.replace("\n", " ")?.replace("\u000c", " ") ?: "Description not available."
 
             val abilityName = detail.abilities.firstOrNull()?.ability?.name ?: "Unknown"
@@ -87,8 +84,8 @@ class PokemonRepositoryImpl @Inject constructor(
             PokemonDetail(
                 id = detail.id,
                 name = detail.name,
-                imageUrl = imageUrl,          // This will now be the GIF URL
-                shinyImageUrl = shinyImageUrl, // This will now be the shiny GIF URL
+                imageUrl = imageUrl,
+                shinyImageUrl = shinyImageUrl,
                 types = detail.types.sortedBy { it.slot }.map { it.type.name },
                 weight = detail.weight / 10.0,
                 height = detail.height / 10.0,

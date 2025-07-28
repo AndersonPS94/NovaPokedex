@@ -19,15 +19,10 @@ class ErrorActivity : AppCompatActivity() {
         binding.tvErrorMessage.text = errorMessage
 
         binding.btnBack.setOnClickListener {
-            // Simplesmente finalize a ErrorActivity.
-            // Isso fará com que a atividade anterior na pilha (sua MainActivity) seja exibida novamente.
+
             finish()
 
-            // Aplica as animações de transição para o fechamento desta atividade.
-            // A animação slide_in_right fará com que a tela ANTERIOR (MainActivity)
-            // deslize para a direita ao "entrar" (reaparecer).
-            // A animação slide_out_left fará com que a tela ATUAL (ErrorActivity)
-            // deslize para a esquerda ao "sair".
+
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
         }
     }

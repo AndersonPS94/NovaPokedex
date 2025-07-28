@@ -1,4 +1,3 @@
-// app/src/main/java/com/example/hacksprintpokedex/data/local/converters/ListStringConverter.kt
 package com.example.hacksprintpokedex.data.local.converters
 
 import androidx.room.TypeConverter

@@ -1,4 +1,3 @@
-// app/src/main/java/com/example/hacksprintpokedex/data/mapper/PokemonLocalMapper.kt
 package com.example.hacksprintpokedex.data.mapper
 
 import com.example.hacksprintpokedex.domain.model.PokemonDetail

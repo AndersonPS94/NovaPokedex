@@ -1,5 +1,4 @@
-// app/src/main/java/com/example/hacksprintpokedex/di/DatabaseModule.kt
-package com.example.hacksprintpokedex.di
+package com.example.hacksprintpokedex.data.di
 
 import android.content.Context
 import androidx.room.Room
@@ -24,9 +23,9 @@ object DatabaseModule {
         return Room.databaseBuilder(
             context.applicationContext,
             PokemonDatabase::class.java,
-            "pokemon_database" // This is the DATABASE FILE name, not the table name.
+            "pokemon_database"
         )
-            .fallbackToDestructiveMigration() // <--- CRITICAL: Make sure this is still here!
+            .fallbackToDestructiveMigration()
             .build()
     }
 

@@ -23,7 +23,6 @@ class PokemonListViewModel @Inject constructor(
     val uiState: StateFlow<PokemonListUiState> = _uiState.asStateFlow()
 
     init {
-        // Começa a observar o banco de dados Room imediatamente
         viewModelScope.launch {
             getPokemonListUseCase()
                 .catch { e -> _uiState.value = PokemonListUiState.Error(e.message ?: "Unknown error") }
@@ -31,21 +30,17 @@ class PokemonListViewModel @Inject constructor(
                     _uiState.value = PokemonListUiState.Success(pokemonList)
                 }
         }
-        // Dispara a busca da rede e o armazenamento no Room (uma vez ao iniciar)
         fetchPokemonsFromNetwork()
     }
 
     fun fetchPokemonsFromNetwork() {
         viewModelScope.launch {
-            // Pode ser bom mostrar um loading apenas se a lista local estiver vazia
-            // ou se for um pull-to-refresh
             if (_uiState.value !is PokemonListUiState.Success || (_uiState.value as PokemonListUiState.Success).pokemonList.isEmpty()) {
                 _uiState.value = PokemonListUiState.Loading
             }
             try {
                 fetchAndStorePokemonUseCase(385)
             } catch (e: Exception) {
-                // Se der erro de rede, apenas notifique se não houver dados locais para mostrar
                 if (_uiState.value is PokemonListUiState.Success && (_uiState.value as PokemonListUiState.Success).pokemonList.isEmpty()) {
                     _uiState.value = PokemonListUiState.Error(e.message ?: "Network error fetching data")
                 } else if (_uiState.value is PokemonListUiState.Loading) {
