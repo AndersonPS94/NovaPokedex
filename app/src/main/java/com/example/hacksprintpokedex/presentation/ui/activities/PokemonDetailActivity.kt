@@ -47,7 +47,7 @@ class PokemonDetailActivity : AppCompatActivity() {
             currentIndex = allPokemonNames.indexOfFirst { it.equals(pokemonName, ignoreCase = true) }
 
             if (currentIndex == -1) {
-                Toast.makeText(this, "Pokémon não encontrado na lista", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Pokémon not found in the list", Toast.LENGTH_SHORT).show()
                 finish()
                 return
             }
@@ -55,7 +55,7 @@ class PokemonDetailActivity : AppCompatActivity() {
         } else if (pokemonName != null) {
             viewModel.load(pokemonName)
         } else {
-            Toast.makeText(this, "Dados insuficientes para exibir Pokémon", Toast.LENGTH_SHORT)
+            Toast.makeText(this, "Insufficient data to display Pokémon", Toast.LENGTH_SHORT)
                 .show()
             finish()
             return
@@ -79,7 +79,7 @@ class PokemonDetailActivity : AppCompatActivity() {
                 when (target) {
                     is NavigationTarget.ErrorActivity -> {
                         val intent = Intent(this, ErrorActivity::class.java).apply {
-                            putExtra("errorMessage", "Erro ao carregar dados do Pokémon.")
+                            putExtra("errorMessage", "Error loading Pokémon data.")
                         }
                         startActivity(intent)
                         finish()
@@ -101,7 +101,7 @@ class PokemonDetailActivity : AppCompatActivity() {
                 currentIndex = (currentIndex - 1 + allPokemonNames.size) % allPokemonNames.size
                 viewModel.load(allPokemonNames[currentIndex])
             } else {
-                Toast.makeText(this, "Nenhum Pokémon na lista para navegar", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "No Pokémon in the list to navigate", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -110,7 +110,7 @@ class PokemonDetailActivity : AppCompatActivity() {
                 currentIndex = (currentIndex + 1) % allPokemonNames.size
                 viewModel.load(allPokemonNames[currentIndex])
             } else {
-                Toast.makeText(this, "Nenhum Pokémon na lista para navegar", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "No Pokémon in the list to navigate", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -130,7 +130,7 @@ class PokemonDetailActivity : AppCompatActivity() {
 
         binding.pokemonName.text = pokemon.name.replaceFirstChar { it.uppercase() }
         binding.pokemonNumber.text = "#${pokemon.id.toString().padStart(3, '0')}"
-        loadGif(pokemon.imageUrl) // Carrega a imagem normal por padrão
+        loadGif(pokemon.imageUrl)
 
         if (pokemon.types.isNotEmpty()) {
             val firstTypeColor = getTypeColor(pokemon.types[0])

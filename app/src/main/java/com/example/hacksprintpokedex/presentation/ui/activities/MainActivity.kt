@@ -4,7 +4,7 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
-import android.view.View // Importe View explicitamente
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: PokemonAdapter
     private lateinit var splashMediaPlayer: MediaPlayer
 
-    //
     private var currentPokemonList: List<Pokemon> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,22 +48,17 @@ class MainActivity : AppCompatActivity() {
         initRecyclerView()
         observePokemonListUiState()
         setupSearchView()
-
     }
-
-
 
     private fun initSplashScreen(splash: androidx.core.splashscreen.SplashScreen) {
         splashMediaPlayer = MediaPlayer.create(this, R.raw.pikapipikachu)
         splashMediaPlayer.start()
 
         splash.setKeepOnScreenCondition {
-
             val isDataLoading = viewModel.uiState.value is PokemonListUiState.Loading
             isDataLoading || splashMediaPlayer.isPlaying
         }
     }
-
 
     private fun initGifAnimation() {
         val pikachuGotchaSound = MediaPlayer.create(this, R.raw.aaaepikachu)
@@ -93,14 +87,12 @@ class MainActivity : AppCompatActivity() {
         binding.pokeSucess.visibility = View.GONE
         binding.pikachuERed.visibility = View.GONE
 
-
         binding.pikachuERed.setOnClickListener {
             if (!pikachuGotchaSound.isPlaying) {
                 pikachuGotchaSound.start()
             }
         }
     }
-
 
     private fun initRecyclerView() {
         adapter = PokemonAdapter(emptyList()) { pokemon ->
@@ -113,7 +105,6 @@ class MainActivity : AppCompatActivity() {
         binding.pokemonList.layoutManager = LinearLayoutManager(this)
         binding.pokemonList.adapter = adapter
     }
-
 
     private fun observePokemonListUiState() {
         lifecycleScope.launch {
@@ -134,16 +125,14 @@ class MainActivity : AppCompatActivity() {
                         is PokemonListUiState.Success -> {
                             binding.pokemonList.visibility = View.VISIBLE
                             adapter.updateList(uiState.pokemonList)
-                            currentPokemonList = uiState.pokemonList // Armazena a lista atual
+                            currentPokemonList = uiState.pokemonList
                             Log.d("MainActivity", "Data loaded: ${uiState.pokemonList.size} pokemons")
-
-
                         }
                         is PokemonListUiState.Error -> {
                             binding.pokeFail.visibility = View.VISIBLE
                             binding.pokemonList.visibility = View.VISIBLE
-                            Toast.makeText(this@MainActivity, "Erro: ${uiState.message}", Toast.LENGTH_LONG).show()
-                            Log.e("MainActivity", "Erro ao carregar dados: ${uiState.message}")
+                            Toast.makeText(this@MainActivity, "Error: ${uiState.message}", Toast.LENGTH_LONG).show()
+                            Log.e("MainActivity", "Error loading data: ${uiState.message}")
                         }
                     }
                 }
@@ -151,17 +140,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun setupSearchView() {
         binding.searchView.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(q: String?) = false
-            override fun onQueryTextChange(q: String?): Boolean {
-                adapter.filterList(q.orEmpty())
+            override fun onQueryTextSubmit(query: String?) = false
+            override fun onQueryTextChange(query: String?): Boolean {
+                adapter.filterList(query.orEmpty())
                 return true
             }
         })
     }
-
 
     private fun playPikachuSoundThenNavigate(pokemon: Pokemon) {
         val pikachuSound = MediaPlayer.create(this, R.raw.pikachu)
@@ -172,12 +159,10 @@ class MainActivity : AppCompatActivity() {
         pikachuSound.start()
     }
 
-
     private fun goToDetail(pokemonName: String) {
         val intent = Intent(this, PokemonDetailActivity::class.java).apply {
             val allNames = ArrayList(currentPokemonList.map { it.name })
             putStringArrayListExtra("pokemonNamesList", allNames)
-
             putExtra("pokemonName", pokemonName)
         }
         startActivity(intent)
