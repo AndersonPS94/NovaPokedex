@@ -1,5 +1,6 @@
 package com.example.hacksprintpokedex.data.di
 
+import com.example.hacksprintpokedex.data.local.PokemonDao // <--- NOVO IMPORT
 import com.example.hacksprintpokedex.data.remote.api.PokeApiService
 import com.example.hacksprintpokedex.data.repository.PokemonRepositoryImpl
 import com.example.hacksprintpokedex.domain.repository.PokemonRepository
@@ -28,8 +29,11 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePokemonRepository(apiService: PokeApiService): PokemonRepository {
-        return PokemonRepositoryImpl(apiService)
+    fun providePokemonRepository(
+        apiService: PokeApiService,
+        pokemonDao: PokemonDao // <--- AGORA INJETA O PokemonDao AQUI
+    ): PokemonRepository {
+        return PokemonRepositoryImpl(apiService, pokemonDao) // <--- E PASSA ELE PARA O CONSTRUTOR
     }
 
     @Provides

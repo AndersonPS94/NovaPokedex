@@ -7,16 +7,18 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hacksprintpokedex.R
 import com.example.hacksprintpokedex.databinding.ItemPokemonRvBinding
-import com.example.hacksprintpokedex.domain.model.PokemonDetail
+import com.example.hacksprintpokedex.domain.model.Pokemon // IMPORTANTE: Agora importa o modelo UNIFICADO Pokemon
 import com.squareup.picasso.Picasso
 import android.content.res.ColorStateList
 
 class PokemonAdapter(
-    private var items: List<PokemonDetail>,
-    private val onPokemonClick: (PokemonDetail) -> Unit
+    // O adaptador agora lida com uma lista de objetos `Pokemon`
+    private var items: List<Pokemon>,
+    private val onPokemonClick: (Pokemon) -> Unit // O callback também recebe o objeto Pokemon
 ) : RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() {
 
-    private var fullList: List<PokemonDetail> = items.toList()
+    // Mantém uma cópia completa da lista para operações de filtragem
+    private var fullList: List<Pokemon> = items.toList()
 
     class PokemonViewHolder(val binding: ItemPokemonRvBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -38,6 +40,7 @@ class PokemonAdapter(
                 .load(imageUrl)
                 .into(imagePokemon)
 
+            // Remove todas as views existentes para evitar duplicação em reutilização
             layoutTypes.removeAllViews()
             for (type in pokemon.types) {
                 val typeView = TextView(root.context).apply {
@@ -58,25 +61,29 @@ class PokemonAdapter(
 
     override fun getItemCount(): Int = items.size
 
-    fun updateList(newList: List<PokemonDetail>) {
+    // Este método agora espera uma lista de `Pokemon`
+    fun updateList(newList: List<Pokemon>) {
         items = newList
         fullList = newList.toList()
         notifyDataSetChanged()
     }
 
+    // O método de filtragem também opera sobre a lista de `Pokemon`
     fun filterList(query: String) {
         val filtered = if (query.isEmpty()) {
             fullList
         } else {
             fullList.filter {
-                it.name.contains(query, ignoreCase = true)
+                it.name.contains(query, ignoreCase = true) ||
+                        it.types.any { type -> type.contains(query, ignoreCase = true) } // Permite filtrar por tipo também
             }
         }
         items = filtered
         notifyDataSetChanged()
     }
 
-    fun getItem(position: Int): PokemonDetail = items[position]
+    // Retorna um `Pokemon` em uma dada posição
+    fun getItem(position: Int): Pokemon = items[position]
 
     private fun getColorByType(type: String): Int {
         return when (type.lowercase()) {
