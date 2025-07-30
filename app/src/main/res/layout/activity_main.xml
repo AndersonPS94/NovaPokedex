@@ -51,9 +51,9 @@
 
     <ImageView
         android:id="@+id/pikachu_e_red"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="85dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="90dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
