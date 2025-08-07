@@ -21,11 +21,11 @@ O app consome dados da [PokéAPI](https://pokeapi.co) e apresenta listagem, deta
 https://github.com/user-attachments/assets/d8b3ffed-147d-4177-878a-3d610a112cd2
 
 📷 **Capturas de Tela**  
-<img src="https://github.com/user-attachments/assets/55d76a26-804e-4abc-9c89-2bf5118b7613" width="300" />
-<img src="https://github.com/user-attachments/assets/bb12f741-9a05-4b11-9e96-c623bf9189b9" width="300" />
-<img src="https://github.com/user-attachments/assets/bc7953cf-7902-4914-9e91-440a42ed48b8" width="300" />
-<img src="https://github.com/user-attachments/assets/10129391-0fc3-4dc3-aab2-4d5a4aa1ec2e" width="300" />
-<img src="https://github.com/user-attachments/assets/b8e3c707-90f7-45ad-8cb8-80b09974771c" width="300" />
+<img src="https://github.com/user-attachments/assets/55d76a26-804e-4abc-9c89-2bf5118b7613" width="200" />
+<img src="https://github.com/user-attachments/assets/bb12f741-9a05-4b11-9e96-c623bf9189b9" width="200" />
+<img src="https://github.com/user-attachments/assets/bc7953cf-7902-4914-9e91-440a42ed48b8" width="200" />
+<img src="https://github.com/user-attachments/assets/10129391-0fc3-4dc3-aab2-4d5a4aa1ec2e" width="200" />
+<img src="https://github.com/user-attachments/assets/b8e3c707-90f7-45ad-8cb8-80b09974771c" width="200" />
 
 > ✅ Lista de Pokémons, detalhes completos com stats, tipos, regiões, sprites normais e shiny.
 
