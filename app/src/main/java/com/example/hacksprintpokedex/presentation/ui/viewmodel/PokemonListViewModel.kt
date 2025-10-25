@@ -39,7 +39,7 @@ class PokemonListViewModel @Inject constructor(
                 _uiState.value = PokemonListUiState.Loading
             }
             try {
-                fetchAndStorePokemonUseCase(385)
+                fetchAndStorePokemonUseCase()
             } catch (e: Exception) {
                 if (_uiState.value is PokemonListUiState.Success && (_uiState.value as PokemonListUiState.Success).pokemonList.isEmpty()) {
                     _uiState.value = PokemonListUiState.Error(e.message ?: "Network error fetching data")

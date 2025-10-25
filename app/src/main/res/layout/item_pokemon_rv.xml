@@ -4,21 +4,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="40dp"
+    android:layout_margin="@dimen/_8sdp"
+    app:cardCornerRadius="@dimen/_16sdp"
+    app:cardElevation="@dimen/_40sdp"
     android:foreground="?android:attr/selectableItemBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:padding="@dimen/_12sdp">
 
         <ImageView
             android:id="@+id/image_pokemon"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginEnd="12dp"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
             android:scaleType="centerCrop"
             android:src="@drawable/bulabasaur"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -33,7 +33,7 @@
             android:fontFamily="@font/poppinbslack"
             android:text="Bulbassauro"
             android:textColor="@android:color/black"
-            android:textSize="20sp"
+            android:textSize="@dimen/_18ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/image_pokemon"
@@ -46,7 +46,7 @@
             android:fontFamily="@font/poppinssemibold"
             android:text="#001"
             android:textColor="@android:color/darker_gray"
-            android:textSize="20sp"
+            android:textSize="@dimen/_16ssp"
             app:layout_constraintStart_toStartOf="@id/tv_pokemon_name"
             app:layout_constraintTop_toBottomOf="@id/tv_pokemon_name" />
 
@@ -57,20 +57,20 @@
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="@id/tv_pokemon_name"
             app:layout_constraintTop_toBottomOf="@id/tv_pokemon_number"
-            android:layout_marginTop="4dp">
+            android:layout_marginTop="@dimen/_4sdp">
 
             <TextView
                 android:id="@+id/tv_type1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
+                android:layout_marginEnd="@dimen/_4sdp"
                 android:background="@drawable/bg_type"
                 android:backgroundTint="#8BC34A"
                 android:fontFamily="@font/poppinbslack"
-                android:padding="6dp"
+                android:padding="@dimen/_6sdp"
                 android:text="Grama"
                 android:textColor="@android:color/white"
-                android:textSize="16sp" />
+                android:textSize="@dimen/_14ssp" />
 
             <TextView
                 android:id="@+id/tv_type2"
@@ -79,10 +79,10 @@
                 android:background="@drawable/bg_type"
                 android:backgroundTint="#673AB7"
                 android:fontFamily="@font/poppinbslack"
-                android:padding="6dp"
+                android:padding="@dimen/_6sdp"
                 android:text="Veneno"
                 android:textColor="@android:color/white"
-                android:textSize="16sp" />
+                android:textSize="@dimen/_14ssp" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

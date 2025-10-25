@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.hacksprintpokedex.data.local.entities.Pokemon // Importe sua entidade
+import com.example.hacksprintpokedex.data.local.entities.Pokemon
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -18,4 +18,7 @@ interface PokemonDao {
 
     @Query("DELETE FROM pokemon_table")
     suspend fun deleteAllPokemons()
+
+    @Query("SELECT lastRefreshed FROM pokemon_table ORDER BY lastRefreshed DESC LIMIT 1")
+    suspend fun getLastRefreshTime(): Long?
 }

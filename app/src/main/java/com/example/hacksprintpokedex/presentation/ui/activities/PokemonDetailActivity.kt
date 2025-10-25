@@ -11,19 +11,25 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.lifecycle.lifecycleScope
 import coil.ImageLoader
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
 import coil.request.ImageRequest
+import com.bumptech.glide.Glide
 import com.example.hacksprintpokedex.R
 import com.example.hacksprintpokedex.databinding.ActivityPokemonDetailBinding
 import com.example.hacksprintpokedex.domain.model.PokemonDetail
-import com.example.hacksprintpokedex.presentation.ui.navigation.NavigationTarget
+import com.example.hacksprintpokedex.presentation.ui.viewmodel.PokemonDetailUiState
 import com.example.hacksprintpokedex.presentation.ui.viewmodel.PokemonDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PokemonDetailActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var imageLoader: ImageLoader
 
     private lateinit var binding: ActivityPokemonDetailBinding
     private val viewModel: PokemonDetailViewModel by viewModels()
@@ -67,35 +73,34 @@ class PokemonDetailActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        viewModel.pokemonDetail.observe(this) { pokemon ->
-            pokemon?.let {
-                currentPokemon = it
-                updateUI(it)
-            }
-        }
-
-        viewModel.navigationTarget.observe(this) { event ->
-            event.getContentIfNotHandled()?.let { target ->
-                when (target) {
-                    is NavigationTarget.ErrorActivity -> {
-                        val intent = Intent(this, ErrorActivity::class.java).apply {
-                            putExtra("errorMessage", "Error loading Pokémon data.")
+        viewModel.uiState
+            .onEach { state ->
+                when (state) {
+                    is PokemonDetailUiState.Success -> {
+                        currentPokemon = state.pokemonDetail
+                        updateUI(currentPokemon)
+                    }
+                    is PokemonDetailUiState.Error -> {
+                        Toast.makeText(this@PokemonDetailActivity, state.message, Toast.LENGTH_LONG).show()
+                        val intent = Intent(this@PokemonDetailActivity, ErrorActivity::class.java).apply {
+                            putExtra("errorMessage", state.message)
                         }
                         startActivity(intent)
                         finish()
                     }
+                    is PokemonDetailUiState.Empty -> Unit
                 }
             }
-        }
+            .launchIn(lifecycleScope)
+
+        viewModel.isLoading
+            .onEach { isLoading ->
+                showLoading(isLoading)
+            }
+            .launchIn(lifecycleScope)
     }
 
     private fun setupNavigationButtons() {
-
-        binding.lottieAnim.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
-        }
-
         binding.prevButton.setOnClickListener {
             if (allPokemonNames.isNotEmpty()) {
                 currentIndex = (currentIndex - 1 + allPokemonNames.size) % allPokemonNames.size
@@ -120,7 +125,8 @@ class PokemonDetailActivity : AppCompatActivity() {
             if (::currentPokemon.isInitialized) {
                 showingShiny = !showingShiny
                 val imageUrl = if (showingShiny) currentPokemon.shinyImageUrl else currentPokemon.imageUrl
-                loadGif(imageUrl)
+                val fallbackUrl = if (showingShiny) currentPokemon.officialArtworkUrl else currentPokemon.officialArtworkUrl
+                loadGifWithFallback(imageUrl, fallbackUrl)
             }
         }
     }
@@ -130,7 +136,7 @@ class PokemonDetailActivity : AppCompatActivity() {
 
         binding.pokemonName.text = pokemon.name.replaceFirstChar { it.uppercase() }
         binding.pokemonNumber.text = "#${pokemon.id.toString().padStart(3, '0')}"
-        loadGif(pokemon.imageUrl)
+        loadGifWithFallback(pokemon.imageUrl, pokemon.officialArtworkUrl)
 
         if (pokemon.types.isNotEmpty()) {
             val firstTypeColor = getTypeColor(pokemon.types[0])
@@ -190,23 +196,27 @@ class PokemonDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadGif(url: String) {
-        val imageLoader = ImageLoader.Builder(this)
-            .components {
-                if (android.os.Build.VERSION.SDK_INT >= 28) {
-                    add(ImageDecoderDecoder.Factory())
-                } else {
-                    add(GifDecoder.Factory())
-                }
-            }
-            .build()
-
+    private fun loadGifWithFallback(url: String, fallbackUrl: String) {
         val request = ImageRequest.Builder(this)
             .data(url)
+            .listener(onError = { _, _ ->
+                val fallbackRequest = ImageRequest.Builder(this@PokemonDetailActivity)
+                    .data(fallbackUrl)
+                    .target(binding.pokemonImage)
+                    .build()
+                imageLoader.enqueue(fallbackRequest)
+            })
             .target(binding.pokemonImage)
             .build()
 
         imageLoader.enqueue(request)
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.loadingOverlay.visibility = if (isLoading) View.VISIBLE else View.GONE
+        if (isLoading) {
+            Glide.with(this).asGif().load(R.drawable.pokeloading).into(binding.loadingGifOverlay)
+        }
     }
 
     private fun getTypeColor(type: String): Int {

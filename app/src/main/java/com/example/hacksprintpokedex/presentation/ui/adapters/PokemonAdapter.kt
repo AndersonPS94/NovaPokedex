@@ -35,11 +35,9 @@ class PokemonAdapter(
             tvPokemonName.text = pokemon.name.replaceFirstChar { it.uppercase() }
             tvPokemonNumber.text = "#${pokemon.id.toString().padStart(3, '0')}"
 
-            // Imagem oficial
-            val imageUrl =
-                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png"
+            // Imagem Estática
             Picasso.get()
-                .load(imageUrl)
+                .load(pokemon.officialArtworkUrl)
                 .into(imagePokemon)
 
             // Tipos com cor dinâmica

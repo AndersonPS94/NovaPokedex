@@ -1,24 +1,29 @@
 package com.example.hacksprintpokedex.data.repository
 
+import android.util.Log
 import com.example.hacksprintpokedex.data.local.PokemonDao
+import com.example.hacksprintpokedex.data.local.PokemonDetailDao
 import com.example.hacksprintpokedex.data.remote.api.PokeApiService
 import com.example.hacksprintpokedex.domain.model.Pokemon
 import com.example.hacksprintpokedex.domain.model.PokemonDetail
 import com.example.hacksprintpokedex.domain.repository.PokemonRepository
-import javax.inject.Inject
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import com.example.hacksprintpokedex.data.mapper.toDomainDetail
 import com.example.hacksprintpokedex.data.mapper.toDomainPokemon
 import com.example.hacksprintpokedex.data.mapper.toLocalPokemon
+import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 
 class PokemonRepositoryImpl @Inject constructor(
     private val apiService: PokeApiService,
-    private val pokemonDao: PokemonDao
+    private val pokemonDao: PokemonDao,
+    private val pokemonDetailDao: PokemonDetailDao
 ) : PokemonRepository {
 
     override fun getPokemonList(): Flow<List<Pokemon>> {
@@ -27,22 +32,26 @@ class PokemonRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun fetchAndStorePokemonList(limit: Int) {
+    override suspend fun fetchAndStorePokemonList() {
         withContext(Dispatchers.IO) {
-            val response = apiService.getPokemonList(limit, 0)
+            val response = apiService.getPokemonList(1025)
             val basicList = response.body()?.results ?: emptyList()
 
             val localPokemons = coroutineScope {
-                basicList.mapNotNull { pokemonBasic ->
+                basicList.map { pokemonBasic ->
                     async {
-                        val detailResponse = apiService.getPokemon(pokemonBasic.name)
-                        if (detailResponse.isSuccessful) {
-                            val detail = detailResponse.body()
-                            detail?.let {
-                                val fullDetail = getPokemonDetail(it.name)
-                                fullDetail.toLocalPokemon()
-                            }
-                        } else {
+                        try {
+                            val detail = apiService.getPokemon(pokemonBasic.name).body()!!
+                            Pokemon(
+                                id = detail.id,
+                                name = detail.name,
+                                imageUrl = "https://play.pokemonshowdown.com/sprites/ani/${normalizePokemonName(detail.name)}.gif",
+                                shinyImageUrl = "https://play.pokemonshowdown.com/sprites/ani-shiny/${normalizePokemonName(detail.name)}.gif",
+                                officialArtworkUrl = detail.sprites.other.officialArtwork.frontDefault,
+                                types = detail.types.map { it.type.name }
+                            ).toLocalPokemon()
+                        } catch (e: Exception) {
+                            Log.e("PokemonRepository", "Failed to fetch details for ${pokemonBasic.name}", e)
                             null
                         }
                     }
@@ -53,12 +62,17 @@ class PokemonRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getPokemonDetail(nameOrId: String): PokemonDetail {
+        val cachedDetail = pokemonDetailDao.getPokemonDetail(nameOrId)
+        if (cachedDetail != null) {
+            return cachedDetail.toDomainDetail()
+        }
+
         return withContext(Dispatchers.IO) {
             val detailResponse = apiService.getPokemon(nameOrId)
             val speciesResponse = apiService.getPokemonSpecies(nameOrId)
 
             if (!detailResponse.isSuccessful || !speciesResponse.isSuccessful) {
-                throw Exception("Failed to fetch data")
+                throw RuntimeException("Failed to fetch data for $nameOrId")
             }
 
             val detail = detailResponse.body()!!
@@ -70,6 +84,7 @@ class PokemonRepositoryImpl @Inject constructor(
                 "https://play.pokemonshowdown.com/sprites/ani/${formattedName}.gif"
             val shinyImageUrl =
                 "https://play.pokemonshowdown.com/sprites/ani-shiny/${formattedName}.gif"
+            val officialArtworkUrl = detail.sprites.other.officialArtwork.frontDefault
 
             val description = species.flavorTextEntries.firstOrNull {
                 it.language.name == "en" || it.language.name == "pt"
@@ -79,11 +94,12 @@ class PokemonRepositoryImpl @Inject constructor(
 
             val regionName = species.generation.name.replace("-", " ")
 
-            PokemonDetail(
+            val pokemonDetail = PokemonDetail(
                 id = detail.id,
                 name = detail.name,
                 imageUrl = imageUrl,
                 shinyImageUrl = shinyImageUrl,
+                officialArtworkUrl = officialArtworkUrl,
                 types = detail.types.sortedBy { it.slot }.map { it.type.name },
                 weight = detail.weight / 10.0,
                 height = detail.height / 10.0,
@@ -92,16 +108,17 @@ class PokemonRepositoryImpl @Inject constructor(
                 description = description,
                 genderRate = species.genderRate
             )
+            pokemonDetailDao.insertPokemonDetail(pokemonDetail.toLocalPokemon())
+            pokemonDetail
         }
     }
 
     private fun normalizePokemonName(name: String): String {
         return name.lowercase()
-            .replace("♀", "f")
-            .replace("♂", "m")
-            .replace("-", "")
             .replace(" ", "")
             .replace(".", "")
             .replace("'", "")
+            .replace("♀", "f")
+            .replace("♂", "m")
     }
 }

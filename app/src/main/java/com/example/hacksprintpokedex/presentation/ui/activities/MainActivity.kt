@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: PokemonListViewModel by viewModels()
     private lateinit var adapter: PokemonAdapter
     private lateinit var splashMediaPlayer: MediaPlayer
+    private lateinit var pikachuGotchaSound: MediaPlayer
 
     private var currentPokemonList: List<Pokemon> = emptyList()
 
@@ -61,7 +62,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initGifAnimation() {
-        val pikachuGotchaSound = MediaPlayer.create(this, R.raw.aaaepikachu)
+        pikachuGotchaSound = MediaPlayer.create(this, R.raw.aaaepikachu)
         Glide.with(this)
             .asGif()
             .load(R.drawable.pikachuered)
@@ -171,5 +172,8 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         splashMediaPlayer.release()
+        if(::pikachuGotchaSound.isInitialized) {
+            pikachuGotchaSound.release()
+        }
     }
 }

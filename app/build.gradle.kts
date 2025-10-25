@@ -46,6 +46,9 @@ android {
 }
 
 dependencies {
+    implementation("com.intuit.sdp:sdp-android:1.1.0")
+    implementation("com.intuit.ssp:ssp-android:1.1.0")
+
     implementation(libs.room.runtime)
     kapt(libs.room.compiler)
     implementation(libs.room.ktx)
