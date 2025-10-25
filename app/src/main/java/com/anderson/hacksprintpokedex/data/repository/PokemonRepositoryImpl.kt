@@ -33,7 +33,7 @@ class PokemonRepositoryImpl @Inject constructor(
 
     override suspend fun fetchAndStorePokemonList() {
         withContext(Dispatchers.IO) {
-            val response = apiService.getPokemonList(1025)
+            val response = apiService.getPokemonList(POKEMON_LIST_LIMIT)
             val basicList = response.body()?.results ?: emptyList()
 
             val localPokemons = coroutineScope {
@@ -41,16 +41,17 @@ class PokemonRepositoryImpl @Inject constructor(
                     async {
                         try {
                             val detail = apiService.getPokemon(pokemonBasic.name).body()!!
+                            val formattedName = normalizePokemonName(detail.name)
                             Pokemon(
                                 id = detail.id,
                                 name = detail.name,
-                                imageUrl = "https://play.pokemonshowdown.com/sprites/ani/${normalizePokemonName(detail.name)}.gif",
-                                shinyImageUrl = "https://play.pokemonshowdown.com/sprites/ani-shiny/${normalizePokemonName(detail.name)}.gif",
+                                imageUrl = "$BASE_IMAGE_URL$formattedName.gif",
+                                shinyImageUrl = "$BASE_SHINY_IMAGE_URL$formattedName.gif",
                                 officialArtworkUrl = detail.sprites.other.officialArtwork.frontDefault,
                                 types = detail.types.map { it.type.name }
                             ).toLocalPokemon()
                         } catch (e: Exception) {
-                            Log.e("PokemonRepository", "Failed to fetch details for ${pokemonBasic.name}", e)
+                            Log.e(TAG, "Failed to fetch details for ${pokemonBasic.name}", e)
                             null
                         }
                     }
@@ -79,10 +80,8 @@ class PokemonRepositoryImpl @Inject constructor(
 
             val formattedName = normalizePokemonName(detail.name)
 
-            val imageUrl =
-                "https://play.pokemonshowdown.com/sprites/ani/${formattedName}.gif"
-            val shinyImageUrl =
-                "https://play.pokemonshowdown.com/sprites/ani-shiny/${formattedName}.gif"
+            val imageUrl = "$BASE_IMAGE_URL$formattedName.gif"
+            val shinyImageUrl = "$BASE_SHINY_IMAGE_URL$formattedName.gif"
             val officialArtworkUrl = detail.sprites.other.officialArtwork.frontDefault
 
             val description = species.flavorTextEntries.firstOrNull {
@@ -100,8 +99,8 @@ class PokemonRepositoryImpl @Inject constructor(
                 shinyImageUrl = shinyImageUrl,
                 officialArtworkUrl = officialArtworkUrl,
                 types = detail.types.sortedBy { it.slot }.map { it.type.name },
-                weight = detail.weight / 10.0,
-                height = detail.height / 10.0,
+                weight = detail.weight / WEIGHT_CONVERSION_FACTOR,
+                height = detail.height / HEIGHT_CONVERSION_FACTOR,
                 ability = abilityName,
                 region = regionName,
                 description = description,
@@ -119,5 +118,14 @@ class PokemonRepositoryImpl @Inject constructor(
             .replace("'", "")
             .replace("♀", "f")
             .replace("♂", "m")
+    }
+
+    companion object {
+        private const val TAG = "PokemonRepository"
+        private const val POKEMON_LIST_LIMIT = 1025
+        private const val BASE_IMAGE_URL = "https://play.pokemonshowdown.com/sprites/ani/"
+        private const val BASE_SHINY_IMAGE_URL = "https://play.pokemonshowdown.com/sprites/ani-shiny/"
+        private const val WEIGHT_CONVERSION_FACTOR = 10.0
+        private const val HEIGHT_CONVERSION_FACTOR = 10.0
     }
 }

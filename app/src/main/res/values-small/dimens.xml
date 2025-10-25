@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="_300sdp">200dp</dimen>
+    <dimen name="_22ssp">18sp</dimen>
+    <dimen name="_18ssp">14sp</dimen>
+</resources>

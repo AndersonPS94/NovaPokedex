@@ -3,10 +3,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <!-- Cores da Marca -->
     <color name="cor_primaria">#B8212F</color>
     <color name="cor_secundaria">#13152A</color>
-
-
+    <color name="cor_secundaria_dark">#90A4AE</color>
+    <color name="pokemon_name_color">#49454F</color>
+    <!-- Cores dos Tipos -->
     <color name="type_fire">#F08030</color>
     <color name="type_water">#6890F0</color>
     <color name="type_grass">#78C850</color>
@@ -26,5 +28,4 @@
     <color name="type_fairy">#EE99AC</color>
     <color name="type_normal">#A8A878</color>
     <color name="type_default">#AAAAAA</color>
-
 </resources>

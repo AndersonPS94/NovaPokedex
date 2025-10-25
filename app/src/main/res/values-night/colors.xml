@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Cores específicas para o modo escuro -->
+    <color name="cor_secundaria_dark">#90A4AE</color>
+    <color name="pokemon_name_color">@color/white</color>
+
+</resources>

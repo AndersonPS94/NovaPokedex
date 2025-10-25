@@ -1,0 +1,46 @@
+<resources>
+    <!-- Tema principal (suporte a modo claro e escuro automático) -->
+    <style name="Theme.Hacksprintpokedex" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Cores primárias -->
+        <item name="colorPrimary">@color/cor_primaria</item>
+        <item name="colorPrimaryVariant">@color/cor_secundaria</item>
+        <item name="colorSecondary">@color/cor_secundaria</item>
+
+        <!-- Cores de superfície e fundo -->
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/black</item>
+        <item name="colorOnSurfaceVariant">#49454F</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:colorBackground">@color/white</item>
+
+        <!-- Status bar -->
+        <item name="android:statusBarColor">@color/cor_secundaria</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <!-- Tema do modo escuro -->
+    <style name="Theme.Hacksprintpokedex.Dark" parent="Theme.Hacksprintpokedex">
+        <item name="colorPrimary">@color/cor_primaria</item>
+        <item name="colorPrimaryVariant">@color/cor_secundaria_dark</item>
+        <item name="colorSecondary">@color/cor_secundaria_dark</item>
+        <item name="colorSurface">#212121</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorOnSurfaceVariant">#CAC4D0</item>
+        <item name="android:windowBackground">#121212</item>
+        <item name="android:statusBarColor">@color/cor_secundaria_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <!-- Tema da Splash Screen -->
+    <style name="Theme.splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/cor_primaria</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/pikachu3d</item>
+        <item name="android:windowSplashScreenBrandingImage">@drawable/pokemonbrandimage</item>
+        <item name="postSplashScreenTheme">@style/Theme.Hacksprintpokedex</item>
+    </style>
+
+    <!-- Estilo do nome do Pokémon -->
+    <style name="PokemonName">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+</resources>

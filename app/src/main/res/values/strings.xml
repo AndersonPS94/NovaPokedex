@@ -1,6 +1,49 @@
 <resources>
     <string name="app_name">Pokedéx</string>
-    <string name="carries_a_seed_on_its_back_from_birth_as_it_grows_the_seed_also_grows">Carries a seed on its back from birth. As it grows, the seed also grows.</string>
-    <string name="_6_9_kg">6.9 kg</string>
-    <string name="weight">WEIGHT</string>
+
+    <!-- Detalhes do Pokémon -->
+    <string name="pokemon_description_placeholder">Carries a seed on its back from birth. As it grows, the seed also grows.</string>
+    <string name="weight_placeholder">6.9 kg</string>
+    <string name="weight_label">WEIGHT</string>
+    <string name="height_label">HEIGHT</string>
+    <string name="ability_label">ABILITY</string>
+    <string name="gender_label">GENDER</string>
+    <string name="region_placeholder">Kanto</string>
+    <string name="pokemon_name_placeholder">Bulbasaur</string>
+    <string name="pokemon_number_placeholder">#001</string>
+    <string name="type_placeholder_1">Grass</string>
+    <string name="type_placeholder_2">Poison</string>
+    <string name="height_placeholder">0.7 m</string>
+    <string name="ability_placeholder">Overgrow</string>
+    <string name="gender_placeholder">87.5% 12.5%</string>
+    <string name="pokemon_number_format">#%s</string>
+    <string name="height_format">%s m</string>
+    <string name="weight_format">%s kg</string>
+    <string name="region_format">Region: %s</string>
+    <string name="gender_format">%1$.1f%% / %2$.1f%%</string>
+    <string name="genderless">Genderless</string>
+
+    <!-- Item da Lista de Pokémon -->
+    <string name="list_item_name_placeholder">Bulbassauro</string>
+    <string name="list_item_number_placeholder">#001</string>
+    <string name="list_item_type1_placeholder">Grama</string>
+    <string name="list_item_type2_placeholder">Veneno</string>
+
+    <!-- Tela de Erro -->
+    <string name="error_oops">Oops!</string>
+    <string name="error_something_went_wrong">Something went wrong.</string>
+    <string name="error_go_back_button">Go back to PokeList</string>
+
+    <!-- Mensagens de Toast -->
+    <string name="toast_pokemon_not_found">Pokémon not found in the list</string>
+    <string name="toast_insufficient_data">Insufficient data to display Pokémon</string>
+    <string name="toast_no_pokemon_to_navigate">No Pokémon in the list to navigate</string>
+
+    <!-- Descrições de Conteúdo -->
+    <string name="content_description_previous_pokemon">Anterior</string>
+    <string name="content_description_next_pokemon">Próximo</string>
+
+    <!-- Strings para o repositório -->
+    <string name="description_not_available">Description not available.</string>
+    <string name="unknown_ability">Unknown</string>
 </resources>

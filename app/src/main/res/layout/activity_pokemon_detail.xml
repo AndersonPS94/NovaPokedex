@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pokeballmainwallpaper">
+    android:background="@color/cor_primaria">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/mainContent"
@@ -24,8 +24,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_20sdp"
                 android:hapticFeedbackEnabled="true"
-                app:cardBackgroundColor="#EBFFFFFF"
-                app:cardCornerRadius="@dimen/_40sdp"
+                app:cardBackgroundColor="?attr/colorSurface"
+                app:cardCornerRadius="@dimen/_30sdp"
                 app:cardElevation="@dimen/_40sdp">
 
                 <LinearLayout
@@ -59,9 +59,8 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/_12sdp"
                             android:background="@drawable/bg_type"
-                            android:backgroundTint="@color/white"
                             android:clickable="true"
-                            android:contentDescription="Anterior"
+                            android:contentDescription="@string/content_description_previous_pokemon"
                             android:focusable="true"
                             app:lottie_autoPlay="true"
                             app:lottie_fileName="leftarrows.json"
@@ -75,9 +74,8 @@
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/_12sdp"
                             android:background="@drawable/bg_type"
-                            android:backgroundTint="@color/white"
                             android:clickable="true"
-                            android:contentDescription="Próximo"
+                            android:contentDescription="@string/content_description_next_pokemon"
                             android:focusable="true"
                             app:lottie_autoPlay="true"
                             app:lottie_fileName="rightrows.json"
@@ -95,8 +93,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppinbslack"
-                            android:text="Bulbasaur"
-                            android:textColor="@android:color/black"
+                            android:text="@string/pokemon_name_placeholder"
+                            android:textColor="?attr/colorOnSurface"
                             android:textSize="@dimen/_20ssp"
                             android:textStyle="bold" />
 
@@ -105,8 +103,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppinssemibold"
-                            android:text="#001"
-                            android:textColor="@color/cor_secundaria"
+                            android:text="@string/pokemon_number_placeholder"
+                            android:textColor="?attr/colorSecondary"
                             android:textSize="@dimen/_14ssp" />
 
                         <LinearLayout
@@ -124,7 +122,7 @@
                                 android:fontFamily="@font/poppinbslack"
                                 android:paddingHorizontal="@dimen/_10sdp"
                                 android:paddingVertical="@dimen/_4sdp"
-                                android:text="Grass"
+                                android:text="@string/type_placeholder_1"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/_12ssp"
                                 android:textStyle="bold" />
@@ -137,7 +135,7 @@
                                 android:fontFamily="@font/poppinbslack"
                                 android:paddingHorizontal="@dimen/_10sdp"
                                 android:paddingVertical="@dimen/_4sdp"
-                                android:text="Poison"
+                                android:text="@string/type_placeholder_2"
                                 android:textColor="@android:color/white"
                                 android:textSize="@dimen/_12ssp"
                                 android:textStyle="bold" />
@@ -152,8 +150,8 @@
                         android:fontFamily="@font/poppinssemibold"
                         android:gravity="center_horizontal"
                         android:lineSpacingExtra="@dimen/_4sdp"
-                        android:text="@string/carries_a_seed_on_its_back_from_birth_as_it_grows_the_seed_also_grows"
-                        android:textColor="@android:color/black"
+                        android:text="@string/pokemon_description_placeholder"
+                        android:textColor="?attr/colorOnSurface"
                         android:textSize="@dimen/_12ssp" />
 
                     <LinearLayout
@@ -175,8 +173,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppinssemibold"
-                            android:text="Kanto"
-                            android:textColor="@android:color/black"
+                            android:text="@string/region_placeholder"
+                            android:textColor="?attr/colorOnSurface"
                             android:textSize="@dimen/_12ssp" />
                     </LinearLayout>
 
@@ -199,14 +197,16 @@
                                 android:id="@+id/statWeightIcon"
                                 android:layout_width="@dimen/_25sdp"
                                 android:layout_height="@dimen/_25sdp"
-                                android:src="@drawable/business" />
+                                android:src="@drawable/business"
+                                android:tint="?attr/colorOnSurface"/>
 
                             <TextView
                                 android:id="@+id/statWeightLabel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppinbslack"
-                                android:text="@string/weight"
+                                android:text="@string/weight_label"
+                                android:textColor="?attr/colorOnSurface"
                                 android:textSize="@dimen/_12ssp"
                                 android:textStyle="bold" />
 
@@ -215,8 +215,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppinssemibold"
-                                android:text="@string/_6_9_kg"
-                                android:textColor="@android:color/darker_gray"
+                                android:text="@string/weight_placeholder"
+                                android:textColor="?attr/colorOnSurfaceVariant"
                                 android:textSize="@dimen/_12ssp" />
                         </LinearLayout>
 
@@ -231,14 +231,16 @@
                                 android:id="@+id/statHeightIcon"
                                 android:layout_width="@dimen/_25sdp"
                                 android:layout_height="@dimen/_25sdp"
-                                android:src="@drawable/resize" />
+                                android:src="@drawable/resize"
+                                android:tint="?attr/colorOnSurface"/>
 
                             <TextView
                                 android:id="@+id/statHeightLabel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppinbslack"
-                                android:text="HEIGHT"
+                                android:text="@string/height_label"
+                                android:textColor="?attr/colorOnSurface"
                                 android:textSize="@dimen/_12ssp"
                                 android:textStyle="bold" />
 
@@ -247,8 +249,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppinssemibold"
-                                android:text="0.7 m"
-                                android:textColor="@android:color/darker_gray"
+                                android:text="@string/height_placeholder"
+                                android:textColor="?attr/colorOnSurfaceVariant"
                                 android:textSize="@dimen/_12ssp" />
                         </LinearLayout>
 
@@ -263,14 +265,16 @@
                                 android:id="@+id/statAbilityIcon"
                                 android:layout_width="@dimen/_25sdp"
                                 android:layout_height="@dimen/_25sdp"
-                                android:src="@drawable/thunder" />
+                                android:src="@drawable/thunder"
+                                android:tint="?attr/colorOnSurface"/>
 
                             <TextView
                                 android:id="@+id/statAbilityLabel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppinbslack"
-                                android:text="ABILITY"
+                                android:text="@string/ability_label"
+                                android:textColor="?attr/colorOnSurface"
                                 android:textSize="@dimen/_12ssp"
                                 android:textStyle="bold" />
 
@@ -279,8 +283,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppinssemibold"
-                                android:text="Overgrow"
-                                android:textColor="@android:color/darker_gray"
+                                android:text="@string/ability_placeholder"
+                                android:textColor="?attr/colorOnSurfaceVariant"
                                 android:textSize="@dimen/_12ssp" />
                         </LinearLayout>
                     </LinearLayout>
@@ -296,15 +300,16 @@
                             android:id="@+id/statGenderIcon"
                             android:layout_width="@dimen/_25sdp"
                             android:layout_height="@dimen/_25sdp"
-                            android:src="@drawable/gender" />
+                            android:src="@drawable/gender"
+                            android:tint="?attr/colorOnSurface"/>
 
                         <TextView
                             android:id="@+id/statGenderLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppinbslack"
-                            android:text="GENDER"
-                            android:textColor="@android:color/black"
+                            android:text="@string/gender_label"
+                            android:textColor="?attr/colorOnSurface"
                             android:textSize="@dimen/_12ssp"
                             android:textStyle="bold" />
 
@@ -313,8 +318,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppinssemibold"
-                            android:text="87.5% 12.5%"
-                            android:textColor="@android:color/darker_gray"
+                            android:text="@string/gender_placeholder"
+                            android:textColor="?attr/colorOnSurfaceVariant"
                             android:textSize="@dimen/_12ssp" />
 
                         <LinearLayout

@@ -53,7 +53,7 @@ class PokemonDetailActivity : AppCompatActivity() {
             currentIndex = allPokemonNames.indexOfFirst { it.equals(pokemonName, ignoreCase = true) }
 
             if (currentIndex == -1) {
-                Toast.makeText(this, "Pokémon not found in the list", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.toast_pokemon_not_found), Toast.LENGTH_SHORT).show()
                 finish()
                 return
             }
@@ -61,7 +61,7 @@ class PokemonDetailActivity : AppCompatActivity() {
         } else if (pokemonName != null) {
             viewModel.load(pokemonName)
         } else {
-            Toast.makeText(this, "Insufficient data to display Pokémon", Toast.LENGTH_SHORT)
+            Toast.makeText(this, getString(R.string.toast_insufficient_data), Toast.LENGTH_SHORT)
                 .show()
             finish()
             return
@@ -106,7 +106,7 @@ class PokemonDetailActivity : AppCompatActivity() {
                 currentIndex = (currentIndex - 1 + allPokemonNames.size) % allPokemonNames.size
                 viewModel.load(allPokemonNames[currentIndex])
             } else {
-                Toast.makeText(this, "No Pokémon in the list to navigate", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.toast_no_pokemon_to_navigate), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -115,7 +115,7 @@ class PokemonDetailActivity : AppCompatActivity() {
                 currentIndex = (currentIndex + 1) % allPokemonNames.size
                 viewModel.load(allPokemonNames[currentIndex])
             } else {
-                Toast.makeText(this, "No Pokémon in the list to navigate", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.toast_no_pokemon_to_navigate), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -135,7 +135,7 @@ class PokemonDetailActivity : AppCompatActivity() {
         showingShiny = false
 
         binding.pokemonName.text = pokemon.name.replaceFirstChar { it.uppercase() }
-        binding.pokemonNumber.text = "#${pokemon.id.toString().padStart(3, '0')}"
+        binding.pokemonNumber.text = getString(R.string.pokemon_number_format, pokemon.id.toString().padStart(3, '0'))
         loadGifWithFallback(pokemon.imageUrl, pokemon.officialArtworkUrl)
 
         if (pokemon.types.isNotEmpty()) {
@@ -167,20 +167,20 @@ class PokemonDetailActivity : AppCompatActivity() {
             binding.pokemontype2.visibility = View.GONE
         }
 
-        binding.statHeightValue.text = "${pokemon.height} m"
-        binding.statWeightValue.text = "${pokemon.weight} kg"
+        binding.statHeightValue.text = getString(R.string.height_format, pokemon.height.toString())
+        binding.statWeightValue.text = getString(R.string.weight_format, pokemon.weight.toString())
         binding.statAbilityValue.text = pokemon.ability.replaceFirstChar { it.uppercase() }
-        binding.pokemonRegion.text = "Region: ${pokemon.region}"
+        binding.pokemonRegion.text = getString(R.string.region_format, pokemon.region)
         binding.pokemonDescription.text = pokemon.description
 
         if (pokemon.genderRate == -1) {
-            binding.pokemonGender.text = "Genderless"
+            binding.pokemonGender.text = getString(R.string.genderless)
             binding.maleBar.visibility = View.GONE
             binding.femaleBar.visibility = View.GONE
         } else {
             val femalePercent = (pokemon.genderRate / 8.0f) * 100
             val malePercent = 100 - femalePercent
-            binding.pokemonGender.text = "${String.format("%.1f", malePercent)}% / ${String.format("%.1f", femalePercent)}%"
+            binding.pokemonGender.text = getString(R.string.gender_format, malePercent, femalePercent)
             binding.maleBar.visibility = View.VISIBLE
             binding.femaleBar.visibility = View.VISIBLE
 

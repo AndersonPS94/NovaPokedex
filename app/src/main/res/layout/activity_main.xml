@@ -19,6 +19,7 @@
         android:background="@drawable/backgroundshapeitem"
         android:closeIcon="@android:drawable/ic_delete"
         android:iconifiedByDefault="false"
+        android:backgroundTint="?attr/colorSurface"
         android:outlineAmbientShadowColor="@color/black"
         android:outlineSpotShadowColor="@color/black"
         android:queryHint="Find your Pokémon"

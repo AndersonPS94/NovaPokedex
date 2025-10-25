@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_8sdp"
+    app:cardBackgroundColor="?attr/colorSurface"
     app:cardCornerRadius="@dimen/_16sdp"
     app:cardElevation="@dimen/_40sdp"
     android:foreground="?android:attr/selectableItemBackground">
@@ -31,8 +32,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppinbslack"
-            android:text="Bulbassauro"
-            android:textColor="@android:color/black"
+            android:text="@string/list_item_name_placeholder"
+            android:textColor="@color/pokemon_name_color"
             android:textSize="@dimen/_18ssp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,8 +45,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppinssemibold"
-            android:text="#001"
-            android:textColor="@android:color/darker_gray"
+            android:text="@string/list_item_number_placeholder"
+            android:textColor="@color/cor_secundaria_dark"
             android:textSize="@dimen/_16ssp"
             app:layout_constraintStart_toStartOf="@id/tv_pokemon_name"
             app:layout_constraintTop_toBottomOf="@id/tv_pokemon_name" />
@@ -68,7 +69,7 @@
                 android:backgroundTint="#8BC34A"
                 android:fontFamily="@font/poppinbslack"
                 android:padding="@dimen/_6sdp"
-                android:text="Grama"
+                android:text="@string/list_item_type1_placeholder"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_14ssp" />
 
@@ -80,7 +81,7 @@
                 android:backgroundTint="#673AB7"
                 android:fontFamily="@font/poppinbslack"
                 android:padding="@dimen/_6sdp"
-                android:text="Veneno"
+                android:text="@string/list_item_type2_placeholder"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_14ssp" />
         </LinearLayout>
