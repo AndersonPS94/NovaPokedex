@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">ポケモン図鑑</string>
+
+    <!-- Detalhes do Pokémon -->
+    <string name="pokemon_description_placeholder">生まれたときから背中に種を背負っている。成長するにつれて、種も成長する。</string>
+    <string name="weight_label">おもさ</string>
+    <string name="height_label">たかさ</string>
+    <string name="ability_label">とくせい</string>
+    <string name="gender_label">せいべつ</string>
+    <string name="region_format">地方: %s</string>
+    <string name="genderless">性別なし</string>
+
+    <!-- Item da Lista de Pokémon -->
+    <string name="list_item_name_placeholder">フシギダネ</string>
+    <string name="list_item_type1_placeholder">くさ</string>
+    <string name="list_item_type2_placeholder">どく</string>
+
+    <!-- Tela de Erro -->
+    <string name="error_oops">おっと！</string>
+    <string name="error_something_went_wrong">問題が発生しました。</string>
+    <string name="error_go_back_button">ポケモンリストに戻る</string>
+
+    <!-- Mensagens de Toast -->
+    <string name="toast_pokemon_not_found">ポケモンがリストに見つかりません</string>
+    <string name="toast_insufficient_data">ポケモンを表示するためのデータが不足しています</string>
+    <string name="toast_no_pokemon_to_navigate">リストに移動するポケモンがいません</string>
+
+    <!-- Descrições de Conteúdo -->
+    <string name="content_description_previous_pokemon">前へ</string>
+    <string name="content_description_next_pokemon">次へ</string>
+
+    <!-- Strings para o repositório -->
+    <string name="description_not_available">説明はありません。</string>
+    <string name="unknown_ability">不明</string>
+</resources>

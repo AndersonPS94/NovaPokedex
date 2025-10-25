@@ -135,7 +135,7 @@ class PokemonDetailActivity : AppCompatActivity() {
         showingShiny = false
 
         binding.pokemonName.text = pokemon.name.replaceFirstChar { it.uppercase() }
-        binding.pokemonNumber.text = getString(R.string.pokemon_number_format, pokemon.id.toString().padStart(3, '0'))
+        binding.pokemonNumber.text = getString(R.string.pokemon_number_format, pokemon.id.toString().padStart(POKEMON_ID_PADDING, '0'))
         loadGifWithFallback(pokemon.imageUrl, pokemon.officialArtworkUrl)
 
         if (pokemon.types.isNotEmpty()) {
@@ -178,7 +178,7 @@ class PokemonDetailActivity : AppCompatActivity() {
             binding.maleBar.visibility = View.GONE
             binding.femaleBar.visibility = View.GONE
         } else {
-            val femalePercent = (pokemon.genderRate / 8.0f) * 100
+            val femalePercent = (pokemon.genderRate / GENDER_RATE_DIVISOR) * 100
             val malePercent = 100 - femalePercent
             binding.pokemonGender.text = getString(R.string.gender_format, malePercent, femalePercent)
             binding.maleBar.visibility = View.VISIBLE
@@ -250,5 +250,10 @@ class PokemonDetailActivity : AppCompatActivity() {
             DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(this, getTypeColor(type)))
             textView.background = wrappedDrawable
         }
+    }
+
+    companion object {
+        private const val GENDER_RATE_DIVISOR = 8.0f
+        private const val POKEMON_ID_PADDING = 3
     }
 }

@@ -18,8 +18,12 @@ class ErrorActivity : AppCompatActivity() {
         binding.tvErrorMessage.text = errorMessage
 
         binding.btnBack.setOnClickListener {
-            finish()
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
+            supportFinishAfterTransition()
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 }
