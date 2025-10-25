@@ -6,7 +6,7 @@ import javax.inject.Inject
 class FetchAndStorePokemonUseCase @Inject constructor(
     private val pokemonRepository: PokemonRepository
 ) {
-    suspend operator fun invoke() {
-        pokemonRepository.fetchAndStorePokemonList()
+    suspend operator fun invoke(language: String) {
+        pokemonRepository.fetchAndStorePokemonList(language)
     }
 }

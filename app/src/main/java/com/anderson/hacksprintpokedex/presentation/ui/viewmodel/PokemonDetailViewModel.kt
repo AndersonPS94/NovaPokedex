@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.util.Locale
 import javax.inject.Inject
 
 sealed class PokemonDetailUiState {
@@ -32,7 +33,8 @@ class PokemonDetailViewModel @Inject constructor(
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                val pokemonDetail = getPokemonDetailUseCase(pokemonName)
+                val language = Locale.getDefault().language
+                val pokemonDetail = getPokemonDetailUseCase(pokemonName, language)
                 _uiState.value = PokemonDetailUiState.Success(pokemonDetail)
             } catch (e: Exception) {
                 _uiState.value = PokemonDetailUiState.Error(e.message ?: "An unknown error occurred")

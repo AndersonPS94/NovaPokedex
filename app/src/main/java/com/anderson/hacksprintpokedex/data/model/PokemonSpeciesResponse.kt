@@ -16,7 +16,9 @@ data class PokemonSpeciesResponse(
     val baseHappiness: Int,
 
     @SerializedName("evolution_chain")
-    val evolutionChain: EvolutionChainUrl
+    val evolutionChain: EvolutionChainUrl,
+
+    val names: List<Name> // Added for translation
 )
 
 data class EvolutionChainUrl(
@@ -32,10 +34,11 @@ data class FlavorTextEntry(
     val language: Language
 )
 
-data class Language(
-    @SerializedName("name")
-    val name: String
-)
+// This is now defined in TranslationModels.kt, but let's keep it here for self-containment if needed
+// data class Language(
+//     @SerializedName("name")
+//     val name: String
+// )
 
 data class Generation(
     @SerializedName("name")

@@ -4,6 +4,7 @@ import android.util.Log
 import com.anderson.hacksprintpokedex.data.local.PokemonDao
 import com.anderson.hacksprintpokedex.data.local.PokemonDetailDao
 import com.anderson.hacksprintpokedex.data.remote.api.PokeApiService
+import com.anderson.hacksprintpokedex.data.model.Name
 import com.anderson.hacksprintpokedex.domain.model.Pokemon
 import com.anderson.hacksprintpokedex.domain.model.PokemonDetail
 import com.anderson.hacksprintpokedex.domain.repository.PokemonRepository
@@ -32,7 +33,7 @@ class PokemonRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun fetchAndStorePokemonList() {
+    override suspend fun fetchAndStorePokemonList(language: String) {
         withContext(Dispatchers.IO) {
             try {
                 val response = apiService.getPokemonList(POKEMON_LIST_LIMIT)
@@ -71,11 +72,7 @@ class PokemonRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getPokemonDetail(nameOrId: String): PokemonDetail {
-        pokemonDetailDao.getPokemonDetail(nameOrId)?.let {
-            return it.toDomainDetail()
-        }
-
+    override suspend fun getPokemonDetail(nameOrId: String, language: String): PokemonDetail {
         return withContext(Dispatchers.IO) {
             val detailResponse = apiService.getPokemon(nameOrId)
             val speciesResponse = apiService.getPokemonSpecies(nameOrId)
@@ -84,32 +81,38 @@ class PokemonRepositoryImpl @Inject constructor(
                 throw IOException("Failed to fetch data for $nameOrId")
             }
 
-            val detail = detailResponse.body() ?: throw IOException("Empty detail response for $nameOrId")
-            val species = speciesResponse.body() ?: throw IOException("Empty species response for $nameOrId")
+            val detail = detailResponse.body()!!
+            val species = speciesResponse.body()!!
+
+            val translatedName = findTranslatedName(species.names, language) ?: detail.name
+
+            val description = species.flavorTextEntries.find { it.language.name == language }?.flavorText
+                ?: species.flavorTextEntries.find { it.language.name == "en" }?.flavorText
+            val cleanedDescription = description?.replace("\n", " ")?.replace("\u000c", " ") ?: "Description not available."
 
             val formattedName = normalizePokemonName(detail.name)
 
-            val description = species.flavorTextEntries.firstOrNull { it.language.name in SUPPORTED_LANGUAGES }
-                ?.flavorText?.replace("\n", " ")?.replace("\u000c", " ")
-                ?: "Description not available."
-
             val pokemonDetail = PokemonDetail(
                 id = detail.id,
-                name = detail.name,
+                name = translatedName.replaceFirstChar { it.uppercase() },
                 imageUrl = "$BASE_IMAGE_URL$formattedName.gif",
                 shinyImageUrl = "$BASE_SHINY_IMAGE_URL$formattedName.gif",
                 officialArtworkUrl = detail.sprites.other.officialArtwork.frontDefault,
                 types = detail.types.sortedBy { it.slot }.map { it.type.name },
                 weight = detail.weight / WEIGHT_CONVERSION_FACTOR,
                 height = detail.height / HEIGHT_CONVERSION_FACTOR,
-                ability = detail.abilities.firstOrNull()?.ability?.name ?: "Unknown",
-                region = species.generation.name.replace("-", " "),
-                description = description,
+                ability = detail.abilities.firstOrNull()?.ability?.name?.replaceFirstChar { it.uppercase() } ?: "Unknown",
+                region = species.generation.name.replace("-", " ").replaceFirstChar { it.uppercase() },
+                description = cleanedDescription,
                 genderRate = species.genderRate
             )
-            pokemonDetailDao.insertPokemonDetail(pokemonDetail.toLocalPokemon())
             pokemonDetail
         }
+    }
+
+    private fun findTranslatedName(names: List<Name>?, language: String): String? {
+        return names?.find { it.language.name == language }?.name
+            ?: names?.find { it.language.name == "en" }?.name
     }
 
     private fun normalizePokemonName(name: String): String {
@@ -128,6 +131,5 @@ class PokemonRepositoryImpl @Inject constructor(
         private const val BASE_SHINY_IMAGE_URL = "https://play.pokemonshowdown.com/sprites/ani-shiny/"
         private const val WEIGHT_CONVERSION_FACTOR = 10.0
         private const val HEIGHT_CONVERSION_FACTOR = 10.0
-        private val SUPPORTED_LANGUAGES = listOf("en", "pt")
     }
 }

@@ -1,6 +1,7 @@
 package com.anderson.hacksprintpokedex.data.remote.api
 
 import com.anderson.hacksprintpokedex.data.model.EvolutionChainResponse
+import com.anderson.hacksprintpokedex.data.model.NamedResourceResponse
 import com.anderson.hacksprintpokedex.data.model.PokemonDetailResponse
 import com.anderson.hacksprintpokedex.data.model.PokemonListResponse
 import com.anderson.hacksprintpokedex.data.model.PokemonSpeciesResponse
@@ -31,4 +32,13 @@ interface PokeApiService {
     suspend fun getEvolutionChain(
         @Path("id") id: Int
     ): Response<EvolutionChainResponse>
+
+    @GET("type/{name}")
+    suspend fun getType(@Path("name") name: String): Response<NamedResourceResponse>
+
+    @GET("ability/{name}")
+    suspend fun getAbility(@Path("name") name: String): Response<NamedResourceResponse>
+
+    @GET("generation/{name}")
+    suspend fun getGeneration(@Path("name") name: String): Response<NamedResourceResponse>
 }

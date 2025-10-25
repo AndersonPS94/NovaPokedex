@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -38,7 +39,8 @@ class PokemonListViewModel @Inject constructor(
                 _uiState.value = PokemonListUiState.Loading
             }
             try {
-                fetchAndStorePokemonUseCase()
+                val language = Locale.getDefault().language
+                fetchAndStorePokemonUseCase(language)
             } catch (e: Exception) {
                 if (_uiState.value is PokemonListUiState.Success && (_uiState.value as PokemonListUiState.Success).pokemonList.isEmpty()) {
                     _uiState.value = PokemonListUiState.Error(e.message ?: "Network error fetching data")
