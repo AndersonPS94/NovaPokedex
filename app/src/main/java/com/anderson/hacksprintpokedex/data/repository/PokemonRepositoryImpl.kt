@@ -10,6 +10,7 @@ import com.anderson.hacksprintpokedex.domain.repository.PokemonRepository
 import com.anderson.hacksprintpokedex.data.mapper.toDomainDetail
 import com.anderson.hacksprintpokedex.data.mapper.toDomainPokemon
 import com.anderson.hacksprintpokedex.data.mapper.toLocalPokemon
+import java.io.IOException
 import javax.inject.Inject
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -33,38 +34,46 @@ class PokemonRepositoryImpl @Inject constructor(
 
     override suspend fun fetchAndStorePokemonList() {
         withContext(Dispatchers.IO) {
-            val response = apiService.getPokemonList(POKEMON_LIST_LIMIT)
-            val basicList = response.body()?.results ?: emptyList()
+            try {
+                val response = apiService.getPokemonList(POKEMON_LIST_LIMIT)
+                if (response.isSuccessful) {
+                    val basicList = response.body()?.results ?: emptyList()
 
-            val localPokemons = coroutineScope {
-                basicList.map { pokemonBasic ->
-                    async {
-                        try {
-                            val detail = apiService.getPokemon(pokemonBasic.name).body()!!
-                            val formattedName = normalizePokemonName(detail.name)
-                            Pokemon(
-                                id = detail.id,
-                                name = detail.name,
-                                imageUrl = "$BASE_IMAGE_URL$formattedName.gif",
-                                shinyImageUrl = "$BASE_SHINY_IMAGE_URL$formattedName.gif",
-                                officialArtworkUrl = detail.sprites.other.officialArtwork.frontDefault,
-                                types = detail.types.map { it.type.name }
-                            ).toLocalPokemon()
-                        } catch (e: Exception) {
-                            Log.e(TAG, "Failed to fetch details for ${pokemonBasic.name}", e)
-                            null
-                        }
+                    val localPokemons = coroutineScope {
+                        basicList.map {
+                            async {
+                                try {
+                                    apiService.getPokemon(it.name).body()?.let { detail ->
+                                        val formattedName = normalizePokemonName(detail.name)
+                                        Pokemon(
+                                            id = detail.id,
+                                            name = detail.name,
+                                            imageUrl = "$BASE_IMAGE_URL$formattedName.gif",
+                                            shinyImageUrl = "$BASE_SHINY_IMAGE_URL$formattedName.gif",
+                                            officialArtworkUrl = detail.sprites.other.officialArtwork.frontDefault,
+                                            types = detail.types.map { it.type.name }
+                                        ).toLocalPokemon()
+                                    }
+                                } catch (e: Exception) {
+                                    Log.e(TAG, "Failed to fetch details for ${it.name}", e)
+                                    null
+                                }
+                            }
+                        }.awaitAll().filterNotNull()
                     }
-                }.awaitAll().filterNotNull()
+                    pokemonDao.insertPokemons(localPokemons)
+                } else {
+                    throw IOException("Failed to fetch pokemon list")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Could not fetch and store pokemon list", e)
             }
-            pokemonDao.insertPokemons(localPokemons)
         }
     }
 
     override suspend fun getPokemonDetail(nameOrId: String): PokemonDetail {
-        val cachedDetail = pokemonDetailDao.getPokemonDetail(nameOrId)
-        if (cachedDetail != null) {
-            return cachedDetail.toDomainDetail()
+        pokemonDetailDao.getPokemonDetail(nameOrId)?.let {
+            return it.toDomainDetail()
         }
 
         return withContext(Dispatchers.IO) {
@@ -72,37 +81,29 @@ class PokemonRepositoryImpl @Inject constructor(
             val speciesResponse = apiService.getPokemonSpecies(nameOrId)
 
             if (!detailResponse.isSuccessful || !speciesResponse.isSuccessful) {
-                throw RuntimeException("Failed to fetch data for $nameOrId")
+                throw IOException("Failed to fetch data for $nameOrId")
             }
 
-            val detail = detailResponse.body()!!
-            val species = speciesResponse.body()!!
+            val detail = detailResponse.body() ?: throw IOException("Empty detail response for $nameOrId")
+            val species = speciesResponse.body() ?: throw IOException("Empty species response for $nameOrId")
 
             val formattedName = normalizePokemonName(detail.name)
 
-            val imageUrl = "$BASE_IMAGE_URL$formattedName.gif"
-            val shinyImageUrl = "$BASE_SHINY_IMAGE_URL$formattedName.gif"
-            val officialArtworkUrl = detail.sprites.other.officialArtwork.frontDefault
-
-            val description = species.flavorTextEntries.firstOrNull {
-                it.language.name == "en" || it.language.name == "pt"
-            }?.flavorText?.replace("\n", " ")?.replace("\u000c", " ") ?: "Description not available."
-
-            val abilityName = detail.abilities.firstOrNull()?.ability?.name ?: "Unknown"
-
-            val regionName = species.generation.name.replace("-", " ")
+            val description = species.flavorTextEntries.firstOrNull { it.language.name in SUPPORTED_LANGUAGES }
+                ?.flavorText?.replace("\n", " ")?.replace("\u000c", " ")
+                ?: "Description not available."
 
             val pokemonDetail = PokemonDetail(
                 id = detail.id,
                 name = detail.name,
-                imageUrl = imageUrl,
-                shinyImageUrl = shinyImageUrl,
-                officialArtworkUrl = officialArtworkUrl,
+                imageUrl = "$BASE_IMAGE_URL$formattedName.gif",
+                shinyImageUrl = "$BASE_SHINY_IMAGE_URL$formattedName.gif",
+                officialArtworkUrl = detail.sprites.other.officialArtwork.frontDefault,
                 types = detail.types.sortedBy { it.slot }.map { it.type.name },
                 weight = detail.weight / WEIGHT_CONVERSION_FACTOR,
                 height = detail.height / HEIGHT_CONVERSION_FACTOR,
-                ability = abilityName,
-                region = regionName,
+                ability = detail.abilities.firstOrNull()?.ability?.name ?: "Unknown",
+                region = species.generation.name.replace("-", " "),
                 description = description,
                 genderRate = species.genderRate
             )
@@ -127,5 +128,6 @@ class PokemonRepositoryImpl @Inject constructor(
         private const val BASE_SHINY_IMAGE_URL = "https://play.pokemonshowdown.com/sprites/ani-shiny/"
         private const val WEIGHT_CONVERSION_FACTOR = 10.0
         private const val HEIGHT_CONVERSION_FACTOR = 10.0
+        private val SUPPORTED_LANGUAGES = listOf("en", "pt")
     }
 }
