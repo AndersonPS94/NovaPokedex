@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -9,25 +11,50 @@ plugins {
 
 android {
     namespace = "com.anderson.hacksprintpokedex"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.anderson.hacksprintpokedex"
         minSdk = 31
-        targetSdk = 34
-        versionCode = 3
-        versionName = "3.0.0"
+        targetSdk = 35
+        versionCode = 4
+        versionName = "4.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            // Você deve criar um arquivo keystore.properties na raiz do seu projeto
+            // para armazenar suas credenciais de assinatura de forma segura.
+            // Não adicione senhas diretamente a este arquivo.
+            // O arquivo keystore.properties deve ser adicionado ao .gitignore.
+            // Exemplo de keystore.properties:
+            // storeFile=release.keystore
+            // storePassword=sua_senha_store
+            // keyAlias=sua_key_alias
+            // keyPassword=sua_senha_key
+            val properties = Properties()
+            val keystoreFile = project.rootProject.file("keystore.properties")
+            if (keystoreFile.exists()) {
+                properties.load(keystoreFile.inputStream())
+            }
+            storeFile = file(properties.getProperty("storeFile", "release.keystore"))
+            storePassword = properties.getProperty("storePassword")
+            keyAlias = properties.getProperty("keyAlias")
+            keyPassword = properties.getProperty("keyPassword")
+        }
+    }
+
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 
