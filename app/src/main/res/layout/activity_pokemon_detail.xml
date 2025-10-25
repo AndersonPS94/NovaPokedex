@@ -53,8 +53,8 @@
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/prevButton"
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/_12sdp"
@@ -69,8 +69,8 @@
 
                         <com.airbnb.lottie.LottieAnimationView
                             android:id="@+id/nextButton"
-                            android:layout_width="@dimen/_40sdp"
-                            android:layout_height="@dimen/_40sdp"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_35sdp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_marginEnd="@dimen/_12sdp"
@@ -165,8 +165,8 @@
 
                         <ImageView
                             android:id="@+id/pokemonRegionIcon"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
                             android:layout_marginEnd="@dimen/_8sdp"
                             android:src="@drawable/map" />
 
@@ -197,8 +197,8 @@
 
                             <ImageView
                                 android:id="@+id/statWeightIcon"
-                                android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"
+                                android:layout_width="@dimen/_25sdp"
+                                android:layout_height="@dimen/_25sdp"
                                 android:src="@drawable/business" />
 
                             <TextView
@@ -207,7 +207,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppinbslack"
                                 android:text="@string/weight"
-                                android:textSize="@dimen/_14ssp"
+                                android:textSize="@dimen/_12ssp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -217,7 +217,7 @@
                                 android:fontFamily="@font/poppinssemibold"
                                 android:text="@string/_6_9_kg"
                                 android:textColor="@android:color/darker_gray"
-                                android:textSize="@dimen/_14ssp" />
+                                android:textSize="@dimen/_12ssp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -229,8 +229,8 @@
 
                             <ImageView
                                 android:id="@+id/statHeightIcon"
-                                android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"
+                                android:layout_width="@dimen/_25sdp"
+                                android:layout_height="@dimen/_25sdp"
                                 android:src="@drawable/resize" />
 
                             <TextView
@@ -239,7 +239,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppinbslack"
                                 android:text="HEIGHT"
-                                android:textSize="@dimen/_14ssp"
+                                android:textSize="@dimen/_12ssp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -249,7 +249,7 @@
                                 android:fontFamily="@font/poppinssemibold"
                                 android:text="0.7 m"
                                 android:textColor="@android:color/darker_gray"
-                                android:textSize="@dimen/_14ssp" />
+                                android:textSize="@dimen/_12ssp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -261,8 +261,8 @@
 
                             <ImageView
                                 android:id="@+id/statAbilityIcon"
-                                android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"
+                                android:layout_width="@dimen/_25sdp"
+                                android:layout_height="@dimen/_25sdp"
                                 android:src="@drawable/thunder" />
 
                             <TextView
@@ -271,7 +271,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppinbslack"
                                 android:text="ABILITY"
-                                android:textSize="@dimen/_14ssp"
+                                android:textSize="@dimen/_12ssp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -281,7 +281,7 @@
                                 android:fontFamily="@font/poppinssemibold"
                                 android:text="Overgrow"
                                 android:textColor="@android:color/darker_gray"
-                                android:textSize="@dimen/_14ssp" />
+                                android:textSize="@dimen/_12ssp" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -294,8 +294,8 @@
 
                         <ImageView
                             android:id="@+id/statGenderIcon"
-                            android:layout_width="@dimen/_30sdp"
-                            android:layout_height="@dimen/_30sdp"
+                            android:layout_width="@dimen/_25sdp"
+                            android:layout_height="@dimen/_25sdp"
                             android:src="@drawable/gender" />
 
                         <TextView
@@ -305,7 +305,7 @@
                             android:fontFamily="@font/poppinbslack"
                             android:text="GENDER"
                             android:textColor="@android:color/black"
-                            android:textSize="@dimen/_14ssp"
+                            android:textSize="@dimen/_12ssp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -315,7 +315,7 @@
                             android:fontFamily="@font/poppinssemibold"
                             android:text="87.5% 12.5%"
                             android:textColor="@android:color/darker_gray"
-                            android:textSize="@dimen/_14ssp" />
+                            android:textSize="@dimen/_12ssp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
