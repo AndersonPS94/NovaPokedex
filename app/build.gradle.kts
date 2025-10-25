@@ -8,15 +8,15 @@ plugins {
 }
 
 android {
-    namespace = "com.example.hacksprintpokedex"
+    namespace = "com.anderson.hacksprintpokedex"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.hacksprintpokedex"
+        applicationId = "com.anderson.hacksprintpokedex"
         minSdk = 31
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 3
+        versionName = "3.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
