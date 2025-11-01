@@ -2,7 +2,7 @@ package com.anderson.hacksprintpokedex.domain.usecase
 
 import com.anderson.hacksprintpokedex.domain.model.Pokemon
 import com.anderson.hacksprintpokedex.domain.repository.PokemonRepository
-import kotlinx.coroutines.flow.Flow // Importe o Flow
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetPokemonListUseCase @Inject constructor(
