@@ -9,7 +9,7 @@ data class Pokemon(
     val name: String,
     val imageUrl: String,
     val shinyImageUrl: String,
-    val officialArtworkUrl: String, // URL para a imagem estática
+    val officialArtworkUrl: String, 
     val types: List<String>,
     val weight: Double,
     val height: Double,
